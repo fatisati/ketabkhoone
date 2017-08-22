@@ -4,7 +4,7 @@ const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Messa
 // Create HTTP server and start listening
 const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
-server.listen(3978, () => {
+server.listen(process.env.port || 3978, () => {
     console.log('server is listening on :3978')
 })
 
@@ -16,7 +16,7 @@ const connector = new ChatConnector({
     // appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
 
-server.post('api/messages', connector.listen())
+server.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
 
 const bot = new UniversalBot(connector, session => {
     session.beginDialog('test')
