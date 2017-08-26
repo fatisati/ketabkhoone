@@ -5,7 +5,7 @@ const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Messa
 const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
 server.listen(process.env.port || 3978, () => {
-    console.log('server is listening on :3978')
+    console.log('new server is listening on :3978')
 })
 
 const connector = new ChatConnector({
