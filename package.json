@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot.js"
+    "start": "node bot.js",
+	"build": ""
   },
   "author": "fateme",
   "license": "ISC",
@@ -16,4 +17,4 @@
     "nodemon": "^1.11.0",
     "npm-git-install": "^0.3.0"
   }
-}
+}  
