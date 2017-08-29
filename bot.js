@@ -22,59 +22,63 @@ const connector = new ChatConnector({
 })
 
 server.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
+var bot = new UniversalBot(connector, function (session) {
+    // echo the user's message
+    session.send("You said: %s", session.message.text);
+});
 
-const bot = new UniversalBot(connector, session => {
-    session.beginDialog('test')
-})
-
-
-
-bot.dialog('test',[
-    // (session) => {
-    //     session.send("Welcome to the dinner reservation.")
-    // },
-    // (session, results) => {
-    //     session.send(results.from.id)
-    // }]
-    // Step 1
-    (session) => {
-        Prompts.text(session, 'Hi! What is your name?')
-    },
-    // Step 2
-    (session, results) => {
+// const bot = new UniversalBot(connector, session => {
+//     session.beginDialog('test')
+// })
 
 
-        // MongoClient.connect(url, function(err, db) {
-        //     if (err) throw err;
-        //     console.log("Database created!");
-        //     db.close();
-        // });
 
-        // MongoClient.connect(url, function(err, db) {
-        //     if (err) throw err;
-        //     db.createCollection("customers", function(err, res) {
-        //         if (err) throw err;
-        //         console.log("Collection created!");
-        //         db.close();
-        //     });
-        // }); 
-        MongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var myobj = { name: session.message.text, address: "Highway 37" };
-            db.collection("customers").insertOne(myobj, function(err, res) {
-                if (err) throw err;
-                console.log("1 document inserted");
-                db.close();
-            });
+// bot.dialog('test',[
+//     // (session) => {
+//     //     session.send("Welcome to the dinner reservation.")
+//     // },
+//     // (session, results) => {
+//     //     session.send(results.from.id)
+//     // }]
+//     // Step 1
+//     (session) => {
+//         Prompts.text(session, 'Hi! What is your name?')
+//     },
+//     // Step 2
+//     (session, results) => {
 
-            db.collection("customers").findOne({}, function(err, result) {
-                if (err) throw err;
-                console.log(result.name);
-                db.close();
-            });
-        });
 
-        session.endDialog('Hello %s!', session.message.text)
-    }
-]
-)
+//         // MongoClient.connect(url, function(err, db) {
+//         //     if (err) throw err;
+//         //     console.log("Database created!");
+//         //     db.close();
+//         // });
+
+//         // MongoClient.connect(url, function(err, db) {
+//         //     if (err) throw err;
+//         //     db.createCollection("customers", function(err, res) {
+//         //         if (err) throw err;
+//         //         console.log("Collection created!");
+//         //         db.close();
+//         //     });
+//         // }); 
+//         MongoClient.connect(url, function(err, db) {
+//             if (err) throw err;
+//             var myobj = { name: session.message.text, address: "Highway 37" };
+//             db.collection("customers").insertOne(myobj, function(err, res) {
+//                 if (err) throw err;
+//                 console.log("1 document inserted");
+//                 db.close();
+//             });
+
+//             db.collection("customers").findOne({}, function(err, result) {
+//                 if (err) throw err;
+//                 console.log(result.name);
+//                 db.close();
+//             });
+//         });
+
+//         session.endDialog('Hello %s!', session.message.text)
+//     }
+// ]
+// )
