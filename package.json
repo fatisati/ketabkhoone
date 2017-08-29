@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bot.js",
-	"build": ""
+    "build": ""
   },
   "author": "fateme",
   "license": "ISC",
@@ -14,7 +14,9 @@
     "botbuilder": "^3.9.0",
     "express": "^4.15.4",
     "git": "^0.1.5",
+    "mongodb": "^2.2.31",
     "nodemon": "^1.11.0",
-    "npm-git-install": "^0.3.0"
+    "npm-git-install": "^0.3.0",
+    "telegraf": "^3.10.1"
   }
-}  
+}
