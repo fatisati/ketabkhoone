@@ -7,7 +7,7 @@ var url = "mongodb://localhost:27017/mydb";
 const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
 server.listen(process.env.port || 3978, () => {
-    console.log('new server is listening on :3978')
+    console.log('test server is listening on :3978')
 })
 
 const connector = new ChatConnector({
