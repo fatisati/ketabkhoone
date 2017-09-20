@@ -12,8 +12,8 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 const connector = new ChatConnector({
 
-    // MICROSOFT_APP_ID : '803f163f-d165-4dd8-ad23-302aa3207db4',
-    // MICROSOFT_APP_PASSWORD : 'B2fqmtUtkTzwmyxYFbmvncJ'
+    MICROSOFT_APP_ID : '803f163f-d165-4dd8-ad23-302aa3207db4',
+    MICROSOFT_APP_PASSWORD : 'B2fqmtUtkTzwmyxYFbmvncJ'
     // appId: '803f163f-d165-4dd8-ad23-302aa3207db4',
     // appPassword: 'B2fqmtUtkTzwmyxYFbmvncJ'
 
