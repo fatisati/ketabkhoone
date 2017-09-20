@@ -14,8 +14,8 @@ const connector = new ChatConnector({
 
     // MICROSOFT_APP_ID : '803f163f-d165-4dd8-ad23-302aa3207db4',
     // MICROSOFT_APP_PASSWORD : 'B2fqmtUtkTzwmyxYFbmvncJ'
-    appId: '803f163f-d165-4dd8-ad23-302aa3207db4',
-    appPassword: 'B2fqmtUtkTzwmyxYFbmvncJ'
+    appId: '98078728-f4ff-4d43-aba7-ed1643232c91',
+    appPassword: 'FBtUvF1mjSvD6QHhPBhae3P'
 
     // appId: process.env.MICROSOFT_APP_ID,
     // appPassword: process.env.MICROSOFT_APP_PASSWORD
