@@ -24,6 +24,7 @@ const connector = new ChatConnector({
 server.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
 var bot = new UniversalBot(connector, function (session) {
     // echo the user's message
+    session.send("You said: %s", session.message.user.name);
     session.send("You said: %s", session.message.text);
 });
 
