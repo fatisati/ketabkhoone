@@ -41,9 +41,9 @@ var server = http.createServer(function(req, res) {
 });
 server.listen(process.env.PORT);
 // Create HTTP server and start listening
-const server = express()
+const eserver = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
-server.listen(process.env.port || process.env.PORT || 3978, () => {
+eserver.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log('test server is listening on :3978')
 })
 
@@ -54,7 +54,7 @@ const connector = new ChatConnector({
 
 })
 
-server.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
+eserver.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
 //test for get id of my user
 // var bot = new UniversalBot(connector, function (session) {
 //     // echo the user's message
