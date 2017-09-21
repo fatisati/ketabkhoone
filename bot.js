@@ -1,23 +1,45 @@
 const express = require('express')
 const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
 
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb://localhost:27017/mydb";
 
-MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    console.log("Database created!");
-    db.close();
-});
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     console.log("Database created!");
+//     db.close();
+// });
 
-MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    db.createCollection("customers", function (err, res) {
-        if (err) throw err;
-        console.log("Collection created!");
-        db.close();
-    });
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     db.createCollection("customers", function (err, res) {
+//         if (err) throw err;
+//         console.log("Collection created!");
+//         db.close();
+//     });
+// });
+
+var http = require('http');
+var server = http.createServer(function(req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+  var config = JSON.parse(process.env.APP_CONFIG);
+  var MongoClient = require('mongodb').MongoClient;
+  var mongoPassword = 'fatisati';
+
+  MongoClient.connect(
+    "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" + 
+    config.mongo.hostString, 
+    function(err, db) {
+      if(!err) {
+        res.end("We are connected to MongoDB\n");
+      } else {
+        res.end("Error while connecting to MongoDB\n");
+      }
+    }
+  );
 });
+server.listen(process.env.PORT);
 // Create HTTP server and start listening
 const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
