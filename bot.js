@@ -1,6 +1,21 @@
 const express = require('express')
 const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
 
+var config = JSON.parse(process.env.APP_CONFIG);
+var MongoClient = require('mongodb').MongoClient;
+var mongoPassword = 'fatisati';
+
+MongoClient.connect(
+    "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" +
+    config.mongo.hostString,
+    function (err, db) {
+        if (!err) {
+            res.end("We are connected to MongoDB\n");
+        } else {
+            res.end("Error while connecting to MongoDB\n");
+        }
+    }
+);
 // var MongoClient = require('mongodb').MongoClient;
 // var url = "mongodb://localhost:27017/mydb";
 
@@ -19,31 +34,17 @@ const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Messa
 //     });
 // });
 
-var http = require('http');
-var server = http.createServer(function(req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
+// var http = require('http');
+// var server = http.createServer(function(req, res) {
+//   res.writeHead(200, { 'Content-Type': 'text/plain' });
 
-  var config = JSON.parse(process.env.APP_CONFIG);
-  var MongoClient = require('mongodb').MongoClient;
-  var mongoPassword = 'fatisati';
-
-  MongoClient.connect(
-    "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" + 
-    config.mongo.hostString, 
-    function(err, db) {
-      if(!err) {
-        res.end("We are connected to MongoDB\n");
-      } else {
-        res.end("Error while connecting to MongoDB\n");
-      }
-    }
-  );
-});
-server.listen(process.env.PORT);
+  
+// });
+//server.listen(process.env.PORT);
 // Create HTTP server and start listening
-const eserver = express()
+const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
-eserver.listen(process.env.port || process.env.PORT || 3978, () => {
+server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log('test server is listening on :3978')
 })
 
@@ -54,7 +55,7 @@ const connector = new ChatConnector({
 
 })
 
-eserver.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
+server.post('/api/messages', connector.listen()) //if server post on api/messages connector should listen
 //test for get id of my user
 // var bot = new UniversalBot(connector, function (session) {
 //     // echo the user's message
