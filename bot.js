@@ -1,9 +1,9 @@
 const express = require('express')
-const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message,CardImage,CardAction } = require('botbuilder')
+const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
 
 var MongoClient = require('mongodb').MongoClient;
-var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
-
+//var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
+var url = "mongodb://localhost:27017/mydb"
 
 // Create HTTP server and start listening
 const server = express()
@@ -29,7 +29,9 @@ server.post('/api/messages', connector.listen()) //if server post on api/message
 
 var bot = new UniversalBot(connector, [
     function (session) {
-        Prompts.choice(session, 'What do you want to do?', Options, {
+        var txt = "Hey " + session.message.user.name + ", what do you want to do?"
+
+        Prompts.choice(session, txt, Options, {
             maxRetries: 3,
             retryPrompt: 'Ooops, what you wrote is not a valid option, please try again'
         });
@@ -69,35 +71,32 @@ function searchF(session) {
     session.beginDialog('search')
 }
 
+var owner, name, auther, genere
 
 bot.dialog('submitbook', [
     // Step 1
     (session) => {
         Prompts.text(session, 'What is your book name?')
     },
+
     // Step 2
     (session, results) => {
 
+        name = session.message.text
+        owner = session.message.user.name
 
-        // MongoClient.connect(url, function(err, db) {
-        //     if (err) throw err;
-        //     console.log("Database created!");
-        //     db.close();
-        // });
+        Prompts.text(session, 'ok..., and what is its auther name?')
 
-        // MongoClient.connect(url, function(err, db) {
-        //     if (err) throw err;
-        //     db.createCollection("customers", function(err, res) {
-        //         if (err) throw err;
-        //         console.log("Collection created!");
-        //         db.close();
-        //     });
-        // }); 
+    },
+    // Step 3
+    (session, results) => {
 
+        auther = session.message.text
 
+        //Prompts.text(session, 'ok..., and what is its auther name?')
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var myobj = { name: session.message.text, owner: session.message.user.name };
+            var myobj = {bowner: owner,   bname: name, bauther: auther};
             db.collection("books").insertOne(myobj, function (err, res) {
                 if (err) throw err;
                 console.log("1 document inserted");
@@ -120,39 +119,26 @@ bot.dialog('submitbook', [
 bot.dialog('search', [
     // Step 1
     (session) => {
-        // MongoClient.connect(url, function (err, db) {
-        //     if (err) throw err;
-        //     //var myobj = { name: session.message.text, owner: session.message.user.name};
-        //     db.collection("books").search(myobj, function (err, res) {
-        //         if (err) throw err;
-        //         console.log("1 document inserted");
-        //         db.close();
-        //     });
-
-
-        //     // db.collection("books").findOne({}, function(err, result) {
-        //     //     if (err) throw err;
-        //     //     console.log(result.name);
-        //     //     db.close();
-        //     // });
-        // });
 
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-           // var query = { address: "Park Lane 38" };
+            // var query = { address: "Park Lane 38" };
             db.collection("books").find({}).toArray(function (err, result) {
                 if (err) throw err;
                 //console.log(result[0].name);
                 var ans
-                for(i=0; i<result.length; i++){
-                    ans += result[i].name
-                    ans += ': '
-                    ans += result[i].owner
-                    ans += ' -- '
+                for (i = 0; i < result.length; i++) {
+                    ans = 'name: '
+                    ans += result[i].bname
+                    ans += '\n author: '
+                    ans += result[i].bauther
+                    ans += ' \n owner: '
+                    ans += result[i].bowner
+                    Prompts.text(session, ans)
                 }
-                Prompts.text(session, ans)
+                //Prompts.text(session, ans)
                 db.close();
-         });
+            });
         });
 
         session.endDialog('thanks  dear %s!', session.message.user.name)
