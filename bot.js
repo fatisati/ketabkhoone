@@ -2,8 +2,8 @@ const express = require('express')
 const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
 
 var MongoClient = require('mongodb').MongoClient;
-//var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
-var url = "mongodb://localhost:27017/mydb"
+var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
+//var url = "mongodb://localhost:27017/mydb"
 
 // Create HTTP server and start listening
 const server = express()
