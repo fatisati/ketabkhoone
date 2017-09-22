@@ -1,46 +1,8 @@
 const express = require('express')
-const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
+const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message,CardImage,CardAction } = require('botbuilder')
 
-var config = JSON.parse(process.env.APP_CONFIG);
-var MongoClient = require('mongodb').MongoClient;
-var mongoPassword = 'fatisati';
-
-MongoClient.connect(
-    "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" +
-    config.mongo.hostString,
-    function (err, db) {
-        if (!err) {
-            res.end("We are connected to MongoDB\n");
-        } else {
-            res.end("Error while connecting to MongoDB\n");
-        }
-    }
-);
 // var MongoClient = require('mongodb').MongoClient;
 // var url = "mongodb://localhost:27017/mydb";
-
-// MongoClient.connect(url, function (err, db) {
-//     if (err) throw err;
-//     console.log("Database created!");
-//     db.close();
-// });
-
-// MongoClient.connect(url, function (err, db) {
-//     if (err) throw err;
-//     db.createCollection("customers", function (err, res) {
-//         if (err) throw err;
-//         console.log("Collection created!");
-//         db.close();
-//     });
-// });
-
-// var http = require('http');
-// var server = http.createServer(function(req, res) {
-//   res.writeHead(200, { 'Content-Type': 'text/plain' });
-
-  
-// });
-//server.listen(process.env.PORT);
 // Create HTTP server and start listening
 const server = express()
 //server.listen(process.env.port || process.env.PORT || 3978, function () { })
@@ -134,11 +96,11 @@ bot.dialog('submitbook', [
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
             var myobj = { name: session.message.text, owner: session.message.user.name };
-            db.collection("books").insertOne(myobj, function (err, res) {
-                if (err) throw err;
-                console.log("1 document inserted");
-                db.close();
-            });
+            // db.collection("books").insertOne(myobj, function (err, res) {
+            //     if (err) throw err;
+            //     console.log("1 document inserted");
+            //     db.close();
+            // });
 
 
             // db.collection("books").findOne({}, function(err, result) {
@@ -173,16 +135,23 @@ bot.dialog('search', [
         //     // });
         // });
 
-        MongoClient.connect(url, function (err, db) {
-            if (err) throw err;
-           // var query = { address: "Park Lane 38" };
-            db.collection("books").find({}).toArray(function (err, result) {
-                if (err) throw err;
-                console.log(result[0].name);
-                Prompts.text(session, result[0].name+" "+result[0].owner)
-                db.close();
-         });
-        });
+        // MongoClient.connect(url, function (err, db) {
+        //     if (err) throw err;
+        //    // var query = { address: "Park Lane 38" };
+        //     db.collection("books").find({}).toArray(function (err, result) {
+        //         if (err) throw err;
+        //         //console.log(result[0].name);
+        //         var ans
+        //         for(i=0; i<result.length; i++){
+        //             ans += result[i].name
+        //             ans += ': '
+        //             ans += result[i].owner
+        //             ans += ' -- '
+        //         }
+        //         Prompts.text(session, ans)
+        //         db.close();
+        //  });
+        // });
 
         session.endDialog('thanks  dear %s!', session.message.user.name)
     }
