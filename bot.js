@@ -85,10 +85,17 @@ bot.dialog('submitbook', [
         name = session.message.text
         owner = session.message.user.name
 
-        Prompts.text(session, 'ok..., and what is its auther name?')
+        Prompts.text(session, 'ok..., and what is its genere?')
 
     },
     // Step 3
+    (session, results) => {
+
+        genere = session.message.text
+        Prompts.text(session, 'well, and auther?')
+
+    },
+    // Step 4
     (session, results) => {
 
         auther = session.message.text
@@ -96,7 +103,7 @@ bot.dialog('submitbook', [
         //Prompts.text(session, 'ok..., and what is its auther name?')
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var myobj = {bowner: owner,   bname: name, bauther: auther};
+            var myobj = {bowner: owner,   bname: name, bauther: auther, bgenre: genere};
             db.collection("books").insertOne(myobj, function (err, res) {
                 if (err) throw err;
                 console.log("1 document inserted");
@@ -111,7 +118,7 @@ bot.dialog('submitbook', [
             // });
         });
 
-        session.endDialog('thanks  dear %s!', session.message.user.name)
+        session.endDialog('thanks  dear %s!', owner)
     }
 ]
 )
@@ -132,7 +139,9 @@ bot.dialog('search', [
                     ans += result[i].bname
                     ans += '\n author: '
                     ans += result[i].bauther
-                    ans += ' \n owner: '
+                     ans += '\n genre: '
+                    ans += result[i].bgenre
+                    ans += ' \n owner: @'
                     ans += result[i].bowner
                     Prompts.text(session, ans)
                 }
@@ -141,7 +150,7 @@ bot.dialog('search', [
             });
         });
 
-        session.endDialog('thanks  dear %s!', session.message.user.name)
+        session.endDialog()
     }
 ]
 )
