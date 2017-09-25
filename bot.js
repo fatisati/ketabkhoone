@@ -143,6 +143,7 @@ bot.dialog('search', [
                     ans += result[i].bgenre
                     ans += ' \n owner: @'
                     ans += result[i].bowner
+                    ans += result.length
                     Prompts.text(session, ans)
                 }
                 //Prompts.text(session, ans)
