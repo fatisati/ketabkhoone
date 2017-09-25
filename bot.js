@@ -26,10 +26,11 @@ server.post('/api/messages', connector.listen()) //if server post on api/message
 //     session.send("You said: %s", session.message.user.name);
 //     session.send("You said: %s", session.message.text);
 // });
-
+var owner, name, auther, genere
 var bot = new UniversalBot(connector, [
     function (session) {
-        var txt = "Hey " + session.message.user.name + ", what do you want to do?"
+        owner = session.message.user.name
+        var txt = "Hey " + owner + ", what do you want to do?"
 
         Prompts.choice(session, txt, Options, {
             maxRetries: 3,
@@ -71,7 +72,7 @@ function searchF(session) {
     session.beginDialog('search')
 }
 
-var owner, name, auther, genere
+
 
 bot.dialog('submitbook', [
     // Step 1
@@ -93,7 +94,6 @@ bot.dialog('submitbook', [
 
         genere = session.message.text
         Prompts.text(session, 'well, and auther?')
-
     },
     // Step 4
     (session, results) => {
@@ -150,7 +150,7 @@ bot.dialog('search', [
             });
         });
 
-        session.endDialog()
+        session.endDialog('end')
     }
 ]
 )
