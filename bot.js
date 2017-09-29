@@ -2,8 +2,8 @@ const express = require('express')
 const { ChatConnector, UniversalBot, Prompts, EntityRecognizer, ListStyle, Message, CardImage, CardAction } = require('botbuilder')
 
 var MongoClient = require('mongodb').MongoClient;
-var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
-//var url = "mongodb://localhost:27017/mydb"
+//var url = process.env.MONGODB_URI//"mongodb://localhost:27017/mydb";
+var url = "mongodb://localhost:27017/mydb"
 
 // Create HTTP server and start listening
 const server = express()
@@ -83,8 +83,8 @@ bot.dialog('submitbook', [
     // Step 2
     (session, results) => {
 
-        name = session.message.text
-        owner = session.message.user.name
+        session.dialogData.name = session.message.text
+        session.dialogData.owner = session.message.user.name
 
         Prompts.text(session, 'ok..., and what is its genere?')
 
@@ -92,18 +92,18 @@ bot.dialog('submitbook', [
     // Step 3
     (session, results) => {
 
-        genere = session.message.text
+        session.dialogData.genere = session.message.text
         Prompts.text(session, 'well, and auther?')
     },
     // Step 4
     (session, results) => {
 
-        auther = session.message.text
+        session.dialogData.auther = session.message.text
 
         //Prompts.text(session, 'ok..., and what is its auther name?')
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var myobj = {bowner: owner,   bname: name, bauther: auther, bgenre: genere};
+            var myobj = {bowner: session.dialogData.owner,   bname: session.dialogData.name, bauther: session.dialogData.auther, bgenre: session.dialogData.genere};
             db.collection("books").insertOne(myobj, function (err, res) {
                 if (err) throw err;
                 console.log("1 document inserted");
@@ -148,10 +148,12 @@ bot.dialog('search', [
                 }
                 //Prompts.text(session, ans)
                 db.close();
+                session.endDialog('end')
             });
+            
         });
 
-        session.endDialog('end')
+        
     }
 ]
 )
