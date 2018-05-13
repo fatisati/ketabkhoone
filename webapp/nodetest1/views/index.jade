@@ -1,5 +1,79 @@
-extends layout
+include mixins
+doctype
+html( lang="en" )
+    head
+        title کتابخونه
+        meta( charset='utf-8' )
+        meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+        meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+        meta( name='description', content='کتابخونه' )
+        +bootswatch("flatly")
 
-block content
-  h1= title
-  p Hello, World! Welcome to #{title}
+    body(style="padding-bottom:10rem;")
+        
+        
+        .container
+
+        
+
+            .jumbotron
+                +nav("کتابخونه", "dropdown_menu")
+                    +nav_item( "index.jade", "active" ) خانه
+                    +nav_item( "newuser.html" ) ورود
+                    +nav_item( "/userlist" ) لیست
+                    +nav_item_dropdown( "#" )( label="Dropdown" )
+                        +nav_item( "#" ) Action
+                        +nav_item( "#" ) Another action
+                        +nav_item( "#" ) Something else here
+                        +nav_divider
+                        +nav_header Nav header
+                        +nav_item( "#" ) Separated link
+                        +nav_item( "#" ) One more separated link
+                
+                +button("info", "/login", "large") ورود
+
+        //- +alert("warning") Warning! Warning!
+
+        //- +panel("Panel Heading", "primary") سلام این یک تست است
+        
+        //- +button("primary", "/newuser", "small") اضافه کن
+
+        //- .jumbotron
+        //-     h1 Hello, world!
+        //-     p This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+        //-     p: +button("primary", "more.htm", "large") Learn more
+        //-     +listGroup("links")
+        //-         +listItem("link1.html", "active")
+        //-             +listHeading List group item heading
+        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        //-         +listItem("link2.html")
+        //-             +listHeading List group item heading
+        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        //-         +listItem("link3.html")
+        //-             +listHeading List group item heading
+        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit
+
+        //- +listGroup("list")
+        //-     +listItem("active") Cras justo odio
+        //-     +listItem Dapibus ac facilisis in
+        //-     +listItem Morbi leo risus
+        //-     +listItem Dapibus ac facilisis in
+        //-     +listItem Morbi leo risus
+        //-     +listItem Dapibus ac facilisis in
+
+        //- +listGroup
+        //-     +listItem
+        //-         +listHeading List group item heading
+        //-         +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        //-     +listItem
+        //-         +listHeading List group item heading
+        //-         +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+        //-     +listItem
+        //-         +listHeading List group item heading
+        //-         +listText Donec id elit non mi porta gr
+        
+        
+        script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+        script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+
+        

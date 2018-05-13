@@ -1,0 +1,79 @@
+include mixins
+doctype
+html( lang="en" )
+    head
+        title کتابخونه
+        meta( charset='utf-8' )
+        meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+        //meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+        //meta( name='description', content='Baking Bootstrap Snippets with Jade' )
+
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        // Latest compiled and minified CSS
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        // jQuery library
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+        // Latest compiled JavaScript
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+
+        link(href='css/style.css', rel='stylesheet')
+        link(href='css/bootstrap-rtl.min.css', rel='stylesheet')
+        link(href='css/rtl.css', rel='stylesheet')
+        link(href='css/bootstrap-responsive-rtl.min.css', rel='stylesheet')
+
+    body(style="padding-bottom:10rem;")
+
+        nav.navbar.navbar-light.bg-light.static-top
+            .container
+                h1 کتابخونه
+                
+
+        .form-row
+            
+            .col-12.col-md-3
+                button.btn.btn-block.btn-lg.btn-primary(type='submit') جست و جو
+            .col-12.col-md-9.mb-2.mb-md-0
+                input.form-control.form-control-lg(type='text', placeholder='')
+
+
+    
+        .row
+            .col-sm-6
+                img(src='images/a.jpg', alt='Nature', style='width:100%')
+            .col-sm-6
+                form.well(id='form-addbook', method='post', action='/addbook')
+                
+                    h3 کتاب خود را اضافه کنید
+                    .form-group
+                        label نام کتاب
+                        input.form-control(type='text', id='book_id', name='bookName')
+
+                    .form-group
+                        label نام نویسنده
+                        input.form-control(type='text', id='author_id', name='authur')
+
+                    .form-group
+                        label(for='sel1') ژانر
+                        select#sel1.form-control
+                            option سفرنامه
+                            option عاشقانه
+                            option ترسناک
+                            option مذهبی
+
+                    .form-group
+                        label عکس
+                        input.form-control(type='text', id='author_id', name='authur')
+                        label.btn.btn-info.btn-file
+                            | Browse 
+                            input(type='file', style='display: none;')
+
+                    
+                  
+                    button.btn.btn-outline-info(type='submit') اضافه کن
+                       
+            
+        
+        script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+        script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+
+        

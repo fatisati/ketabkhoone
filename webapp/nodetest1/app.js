@@ -5,14 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // New Code
+var db_url = 'localhost:27017/nodetest1' //process.env.MONGODB_URI //'localhost:27017/nodetest1'
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
+var db = monk(db_url);
+
+var app = express();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +24,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
@@ -29,6 +32,9 @@ app.use(function(req,res,next){
     req.db = db;
     next();
 });
+
+// var auth = require('./node-login/app');
+// app.use('/auth/',auth);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -48,5 +54,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
