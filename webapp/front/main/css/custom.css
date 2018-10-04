@@ -1,0 +1,28 @@
+@font-face {
+    font-family: nasim;
+    src: url('../fonts/bbc-nassim-bold.woff'); 
+  }
+
+  body {
+    font-family: nasim, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: nasim, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  } 
+  
+  a {
+    font-family: nasim;
+  }
+  p {
+    font-family: nasim;}
+    
+/* .navbar{
+    background-color: #827ffe;
+} */
