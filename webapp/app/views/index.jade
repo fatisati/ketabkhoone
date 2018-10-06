@@ -6,8 +6,8 @@ html(lang='fa', dir='rtl')
     meta(name='description', content='')
     meta(name='author', content='')
     title کتابخونه
-    // Bootstrap core CSS
-    link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
+    //- // Bootstrap core CSS
+    //- link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
     // rtl
     link(rel='stylesheet', href='https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css', integrity='sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz', crossorigin='anonymous')
     // Custom fonts for this template
@@ -20,20 +20,22 @@ html(lang='fa', dir='rtl')
     link(href='css/freelancer.css', rel='stylesheet')
     link(href='css/custom.css', rel='stylesheet', type='text/css')
   body#page-top
-    // Navigation
-    nav.navbar.navbar-inverse.navbar-expand-lg.navbar-light.fixed-top
+    // Navigatioد
+    nav.navbar.navbar-inverse.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
       a.navbar-brand(href='#') کتابخونه
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
-      ul.navbar-nav.mr-auto
-        li.nav-item
-          a.nav-link(href='/login') ورود
-        li.nav-item
-          a.nav-link(href='/signup') ثبت نام
-      form.form-inline.my-2.my-lg-0
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/login') ورود
+          li.nav-item
+            a.nav-link(href='/signup') ثبت نام
+          
+        form.form-inline.my-2.my-lg-0
           input.form-control.mr-sm-2(type='search', placeholder='جست و جوی کتاب', aria-label='Search')
           button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
+
     // Header
     header.masthead.bg-primary.text-white.text-center
       .container
