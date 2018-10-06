@@ -12,8 +12,8 @@ var bodyParser = require("body-parser");
 //var monk = require('monk');
 var mongoose = require("mongoose");
 //var db = monk(db_url);
-// const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh',{useNewUrlParser: true});
-const db = mongoose.connect(process.env.MONGODB_URI,{useNewUrlParser: true});
+const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh');
+// const db = mongoose.connect(process.env.MONGODB_URI);
 if(!db){
   console.log('no connection to db')
 }

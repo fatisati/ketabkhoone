@@ -1,83 +1,77 @@
-include mixins
-doctype
-html( lang="en" )
-    head
-        title کتابخونه
-        meta( charset='utf-8' )
-        meta( http-equiv='X-UA-Compatible', content='IE=edge' )
-        meta( name='viewport', content='width=device-width, initial-scale=1.0' )
-        meta( name='description', content='کتابخونه' )
-        +bootswatch("flatly")
-
-    body(style="padding-bottom:10rem;")
-        
-        
-        f#login.center-vertical
-                form.well(name="adduser",method="post",action="/adduser")
-                    
-                    h6 plz signup
-
-                    .form-group
-                        label name
-                        input.form-control(type='text', id='name-tf', name='name')
-                    .form-group
-                        label family
-                        input.form-control(type='text', id='family-tf', name='family')
-                    .form-group
-                        label email
-                        input.form-control(type='email', id='email-tf', name='email')
-                    .form-group
-                        label Username
-                        input.form-control(type='text', id='user-tf', name='user')
-                    .form-group
-                        label Password
-                        input.form-control(type='password', id='pass-tf', name='pass')
-                    button#btnSubmit(type="submit") submit
-                        
-                        
-                    .clearfix
-        //- +alert("warning") Warning! Warning!
-
-        //- +panel("Panel Heading", "primary") سلام این یک تست است
-        
-        //- +button("primary", "/newuser", "small") اضافه کن
-
-        //- .jumbotron
-        //-     h1 Hello, world!
-        //-     p This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-        //-     p: +button("primary", "more.htm", "large") Learn more
-        //-     +listGroup("links")
-        //-         +listItem("link1.html", "active")
-        //-             +listHeading List group item heading
-        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        //-         +listItem("link2.html")
-        //-             +listHeading List group item heading
-        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        //-         +listItem("link3.html")
-        //-             +listHeading List group item heading
-        //-             +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit
-
-        //- +listGroup("list")
-        //-     +listItem("active") Cras justo odio
-        //-     +listItem Dapibus ac facilisis in
-        //-     +listItem Morbi leo risus
-        //-     +listItem Dapibus ac facilisis in
-        //-     +listItem Morbi leo risus
-        //-     +listItem Dapibus ac facilisis in
-
-        //- +listGroup
-        //-     +listItem
-        //-         +listHeading List group item heading
-        //-         +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        //-     +listItem
-        //-         +listHeading List group item heading
-        //-         +listText Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-        //-     +listItem
-        //-         +listHeading List group item heading
-        //-         +listText Donec id elit non mi porta gr
-        
-        
-        script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
-        script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
-
-        
+doctype html
+html(lang='en')
+  head
+    title ثبت نام
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // ===============================================================================================
+    link(rel='icon', type='image/png', href='images/icons/favicon.ico')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/bootstrap/css/bootstrap.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/animate/animate.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/css-hamburgers/hamburgers.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/animsition/css/animsition.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/select2/select2.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='vendor/daterangepicker/daterangepicker.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='css/bootstrap-rtl.min.css')
+    link(rel='stylesheet', type='text/css', href='css/rtl.css')
+    link(rel='stylesheet', type='text/css', href='css/bootstrap-responsive-rtl.min.css')
+    link(rel='stylesheet', type='text/css', href='css/util.css')
+    link(rel='stylesheet', type='text/css', href='css/main.css')
+    // ===============================================================================================
+  body
+    .limiter
+      .container-login100
+        .wrap-login100.p-t-50.p-b-90
+          form.login100-form.validate-form.flex-sb.flex-w
+            span.login100-form-title.p-b-51
+              | ثبت نام
+            .wrap-input100.validate-input.m-b-16
+              input.input100(type='text', name='name', placeholder='نام')
+              span.focus-input100
+            .wrap-input100.validate-input.m-b-16
+              input.input100(type='text', name='fname', placeholder='نام خانوادگی')
+              span.focus-input100
+            .wrap-input100.validate-input.m-b-16(data-validate='email is required')
+              input.input100(type='text', name='email', placeholder='ایمیل')
+              span.focus-input100
+            .wrap-input100.validate-input.m-b-16(data-validate='Password is required')
+              input.input100(type='password', name='pass', placeholder='رمز عبور')
+              span.focus-input100
+            .wrap-input100.validate-input.m-b-16(data-validate='Password is required')
+              input.input100(type='password', name='pass_confirm', placeholder='تکرار رمز عبور')
+              span.focus-input100
+            .flex-sb-m.w-full.p-t-3.p-b-24
+              div
+                a.txt1(href='#')
+                  | بازگشت به صفحه ورود
+            .container-login100-form-btn.m-t-17
+              button.login100-form-btn
+                | ثبت نام
+    #dropDownSelect1
+    // ===============================================================================================
+    script(src='vendor/jquery/jquery-3.2.1.min.js')
+    // ===============================================================================================
+    script(src='vendor/animsition/js/animsition.min.js')
+    // ===============================================================================================
+    script(src='vendor/bootstrap/js/popper.js')
+    script(src='vendor/bootstrap/js/bootstrap.min.js')
+    // ===============================================================================================
+    script(src='vendor/select2/select2.min.js')
+    // ===============================================================================================
+    script(src='vendor/daterangepicker/moment.min.js')
+    script(src='vendor/daterangepicker/daterangepicker.js')
+    // ===============================================================================================
+    script(src='vendor/countdowntime/countdowntime.js')
+    // ===============================================================================================
+    script(src='js/main.js')

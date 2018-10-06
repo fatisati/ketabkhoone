@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login', {fail : false});    
+  res.render('index', {fail : false});    
 });
 
 /* GET Hello World page. */
@@ -45,7 +45,7 @@ router.post('/adduser', function(req, res) {
         else {
             console.log("user registered");
             // And forward to success page
-            res.redirect("userlist");
+            res.redirect("home");
         }
     });
 });
@@ -54,7 +54,7 @@ router.post('/auth', function(req, res) {
   
     user.findOne({'username' :req.body.user}, (err, u) => { 
         if (u){
-			u.password == req.body.pass ? res.render("main"): res.send("wronge pass");
+			u.password == req.body.pass ? res.render("home"): res.send("wronge pass");
 		}else{
             res.render("login", {fail : true});
             //res.status(400).send(e);    
@@ -75,7 +75,7 @@ router.post('/addbook', function(req, res) {
     //var image_path = req.files.path;
     var genere = req.body.genere;
    
-    let b = new user({ bookname: bookName ,genre: genere ,author : author })
+    let b = new book({ bookname: bookName ,genre: genere ,author : author })
     b.save(function (err, todos) {
         if (err) {
             // If it failed, return error
@@ -87,6 +87,18 @@ router.post('/addbook', function(req, res) {
             res.send( bookName + "  book added.");
         }
     });
+});
+
+router.post('/searchbyname', function(req, res) {
+  
+    book.findOne({'bookname' :req.body.bookname}, (err, b) => { 
+        if (b){
+			res.render("searchbook_result");
+		}else{
+            res.render("searchbyname"); 
+		}
+    })
+    
 });
 
 
