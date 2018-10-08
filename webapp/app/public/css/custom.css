@@ -23,16 +23,15 @@
   p {
     font-family: nasim;}
     
-.navbar{
-    background-color: #f3a25f;
-}
+
 .masthead{
   background-image: url("../img/shelf3.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.star {
+.my-star {
   color: #fff;
   background-color: #827ffe;
 }
+
 
