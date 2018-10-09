@@ -1,0 +1,63 @@
+mixin nav
+    nav.navbar.navbar-inverse.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+      a.navbar-brand(href='#') کتابخونه
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          //
+            <li class="nav-item active">
+            <a class="nav-link" href="#">خانه <span class="sr-only">(current)</span></a>
+            </li>
+          li.nav-item
+            a.nav-link(href='#') اضافه کردن کتاب
+          li.nav-item
+            a.nav-link(href='#') صفحه من
+          li.nav-item
+            a.nav-link(href='#') خروج
+          //
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        form.form-inline.my-2.my-lg-0
+          input.form-control.mr-sm-2(placeholder='جست و جوی کتاب', aria-label='Search', type='search')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
+
+
+mixin book_card(img_src, title, author, description)
+    
+    //- - var img_src = book.ing_src
+    //- - var title = book.title
+    //- - var author = book.title
+    //- - var description = book.descr
+    .card.h-100
+        a(href='#')
+          img.card-img-top(src=img_src, alt='')
+        .card-body
+          h4.card-title
+            a(href='#')= title
+          h5= author
+          p.card-text= description
+        .card-footer
+          small.text-muted ★ ★ ★ ★ ☆
+
+mixin show_books(books)
+    
+    each book in books
+        .col-lg-4.col-md-6.mb-4
+                +book_card(book[0], book[1], book[2], book[3])
+
+        
+            
+    
