@@ -32,8 +32,8 @@ html(lang='fa', dir='rtl')
           li.nav-item
             a.nav-link(href='/signup') ثبت نام
           
-        form.form-inline.my-2.my-lg-0
-          input.form-control.mr-sm-2(type='search', placeholder='جست و جوی کتاب', aria-label='Search')
+        form.form-inline.my-2.my-lg-0(id='form-search', method='post', action='/searchbook')
+          input.form-control.mr-sm-2(type='search', name="name" , placeholder='جست و جوی کتاب', aria-label='Search')
           button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
 
     // Header

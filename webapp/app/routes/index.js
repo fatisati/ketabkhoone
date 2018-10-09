@@ -97,11 +97,11 @@ router.post('/addbook', function(req, res) {
 
 router.post('/searchbook', function(req, res) {
   
-    bn = ""+req.body.name;
+    bn = req.body.name.toString();
     // ab = ""+req.body.author
     book.find( { $or:[
-                      {'bookname' : { "$regex":bn , $options: 'i' }},
-                      {'author' : { "$regex":bn , $options: 'i' }}
+                    {'bookname' : { "$regex": bn  }},
+                    {'author' : { "$regex":bn  }}
                      ]  }          
        , (err, b) => { 
         if (err){
