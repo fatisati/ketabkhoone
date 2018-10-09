@@ -95,15 +95,25 @@ router.post('/addbook', function(req, res) {
     });
 });
 
-router.post('/searchbyname', function(req, res) {
+router.post('/searchbook', function(req, res) {
   
-    book.findOne({'bookname' :req.body.bookname}, (err, b) => { 
-        if (b){
-			res.render("searchbook_result");
-		}else{
-            res.render("searchbyname"); 
-		}
-    })
+    bn = req.body.name.toString();
+    // ab = ""+req.body.author
+    book.find( { $or:[
+                    {'bookname' : { "$regex": bn  }},
+                    {'author' : { "$regex":bn  }}
+                     ]  }          
+       , (err, b) => { 
+        if (err){
+            console.log(err)
+        }else{
+            // res.render("searchbyname");
+            var count = b.length
+            for (i = 0; i < count; i++) { 
+                console.log("book is "+b[i]);
+            }
+        }
+    } )
     
 });
 

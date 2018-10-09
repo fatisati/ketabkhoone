@@ -11,6 +11,7 @@ var bodyParser = require("body-parser");
 //var db_url = 'mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh' //process.env.MONGODB_URI //process.env.MONGODB_URI //'localhost:27017/nodetest1'
 //var monk = require('monk');
 var mongoose = require("mongoose");
+mongoose.plugin(require('mongoose-regex-search'));
 //var db = monk(db_url);
 const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh');
 // const db = mongoose.connect(process.env.MONGODB_URI);
