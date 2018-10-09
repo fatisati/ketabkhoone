@@ -70,7 +70,7 @@ router.post('/auth', function(req, res) {
 });
 
 router.get('/test', function(req, res) {
-    res.render('test');
+    res.render('show_books.jade');
 });
 
 

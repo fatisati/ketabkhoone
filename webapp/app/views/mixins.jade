@@ -1,4 +1,4 @@
-mixin nav()
+mixin nav
     nav.navbar.navbar-inverse.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
       a.navbar-brand(href='#') کتابخونه
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
@@ -34,7 +34,30 @@ mixin nav()
           input.form-control.mr-sm-2(placeholder='جست و جوی کتاب', aria-label='Search', type='search')
           button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
 
-mixin nav_item(name, href)
-    li.nav-item
-            a.nav-link(href=href) = name
 
+mixin book_card(img_src, title, author, description)
+    
+    //- - var img_src = book.ing_src
+    //- - var title = book.title
+    //- - var author = book.title
+    //- - var description = book.descr
+    .card.h-100
+        a(href='#')
+          img.card-img-top(src=img_src, alt='')
+        .card-body
+          h4.card-title
+            a(href='#')= title
+          h5= author
+          p.card-text= description
+        .card-footer
+          small.text-muted ★ ★ ★ ★ ☆
+
+mixin show_books(books)
+    
+    each book in books
+        .col-lg-4.col-md-6.mb-4
+                +book_card(book[0], book[1], book[2], book[3])
+
+        
+            
+    

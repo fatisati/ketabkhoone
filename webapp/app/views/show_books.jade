@@ -1,0 +1,41 @@
+include mixins
+doctype html
+html(dir='rtl', lang='fa')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title نتایج جست و جو
+    // Bootstrap core CSS
+    // <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    link(rel='stylesheet', href='https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css', integrity='sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz', crossorigin='anonymous')
+    // Custom styles for this template
+    link(href='css/shop-homepage.css', rel='stylesheet')
+  body
+    // Navigation
+    +nav
+    // Page Content
+    .container
+      h1.my-4 نتایج جست و جو :
+      // <div class="row">
+      .col-lg-12
+        .row
+            +show_books([['/img/b3.jpg', 'اسم کتاب', 'نویسنده', 'خلاصه'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست']])
+            //- +show_books(['./img/b1.jpg', 'سلام', 'نادر', 'تست'])
+        // /.row
+        // /.col-lg-9
+        // </div>
+        // /.row
+        // /.container
+        // Footer
+        footer.py-5.bg-dark
+          .container
+            p.m-0.text-center.text-white Copyright © Your Website 2017
+          // /.container
+          // Bootstrap core JavaScript
+          script(src='vendor/jquery/jquery.min.js')
+          script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
+          script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
+          script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+          script(src='https://cdn.rtlcss.com/bootstrap/v4.0.0/js/bootstrap.min.js', integrity='sha384-54+cucJ4QbVb99v8dcttx/0JRx4FHMmhOWi4W+xrXpKcsKQodCBwAvu3xxkZAwsH', crossorigin='anonymous')
