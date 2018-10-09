@@ -3886,7 +3886,7 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
   font-family: myFirstFont;
   font: bold;
 }
@@ -7740,7 +7740,7 @@ button.bg-dark:focus {
 
 .mr-auto,
 .mx-auto {
-  margin-right: auto !important;
+  margin-right: 0px !important;
 }
 
 .mb-auto,

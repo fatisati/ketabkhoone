@@ -33,7 +33,7 @@ html(lang='en')
     .limiter
       .container-login100
         .wrap-login100.p-t-50.p-b-90
-          form.login100-form.validate-form.flex-sb.flex-w
+          form.login100-form.validate-form.flex-sb.flex-w(id='form-login', method='post', action='/adduser')
             span.login100-form-title.p-b-51
               | ثبت نام
             .wrap-input100.validate-input.m-b-16
@@ -53,12 +53,13 @@ html(lang='en')
               span.focus-input100
             .flex-sb-m.w-full.p-t-3.p-b-24
               div
-                a.txt1(href='#')
+                a.txt1(href='/')
                   | بازگشت به صفحه ورود
             .container-login100-form-btn.m-t-17
-              button.login100-form-btn
+              button.login100-form-btn(type="submit")
                 | ثبت نام
     #dropDownSelect1
+
     // ===============================================================================================
     script(src='vendor/jquery/jquery-3.2.1.min.js')
     // ===============================================================================================
@@ -75,3 +76,4 @@ html(lang='en')
     script(src='vendor/countdowntime/countdowntime.js')
     // ===============================================================================================
     script(src='js/main.js')
+

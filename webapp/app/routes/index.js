@@ -28,6 +28,12 @@ router.get('/login', function(req, res){
     res.render('login', { title: 'Hello - Please Login To Your Account' });
 });
 
+router.get('/home', function(req, res){
+    // check if the user's credentials are saved in a cookie //
+        res.render('home');
+    });
+    
+
 router.get('/signup', function(req, res){
 // check if the user's credentials are saved in a cookie //
     res.render('signup', { title: 'Hello - Please Login To Your Account' });
@@ -35,8 +41,7 @@ router.get('/signup', function(req, res){
 
 router.post('/adduser', function(req, res) {
 
-    let u = new user({ username: req.body.user ,name: req.body.name,password : req.body.pass,'islogine':true })
-    
+    let u = new user({ username: req.body.email ,name: req.body.name,fname: req.body.fname,pass : req.body.pass,'islogine':true })
     u.save(function (err, todos) {
         if (err) {
             // If it failed, return error
@@ -45,16 +50,17 @@ router.post('/adduser', function(req, res) {
         else {
             console.log("user registered");
             // And forward to success page
-            res.redirect("home");
+            res.redirect('/home');
+            // res.render('home');
         }
     });
 });
 
 router.post('/auth', function(req, res) {
   
-    user.findOne({'username' :req.body.user}, (err, u) => { 
+    user.findOne({'username' :req.body.email}, (err, u) => { 
         if (u){
-			u.password == req.body.pass ? res.render("home"): res.send("wronge pass");
+			u.pass == req.body.pass ?  res.redirect('/home'): res.render("login", {fail : true});
 		}else{
             res.render("login", {fail : true});
             //res.status(400).send(e);    

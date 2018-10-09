@@ -7,7 +7,7 @@ html(lang='fa', dir='rtl')
     meta(name='author', content='')
     title کتابخونه
     //- // Bootstrap core CSS
-    //- link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
+    link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
     // rtl
     link(rel='stylesheet', href='https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css', integrity='sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz', crossorigin='anonymous')
     // Custom fonts for this template
@@ -21,7 +21,7 @@ html(lang='fa', dir='rtl')
     link(href='css/custom.css', rel='stylesheet', type='text/css')
   body#page-top
     // Navigatioد
-    nav.navbar.navbar-inverse.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+    nav.navbar.navbar-inverse.navbar-expand-lg.fixed-top
       a.navbar-brand(href='#') کتابخونه
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
@@ -55,6 +55,7 @@ html(lang='fa', dir='rtl')
                 .portfolio-item-caption-content.my-auto.w-100.text-center.text-white
                   i.fas.fa-search-plus.fa-3x
               img.img-fluid(src='img/developers/maryam.png', alt='')
+
           .col-md-6.col-lg-4
             a.portfolio-item.d-block.mx-auto(href='#fatemeh-resume')
               .portfolio-item-caption.d-flex.position-absolute.h-100.w-100
@@ -83,7 +84,7 @@ html(lang='fa', dir='rtl')
     section#about.bg-primary.text-white.mb-0
       .container
         h2.text-center.text-uppercase.text-white درباره ما
-        hr.star-light.mb-5.star
+        hr.star-light.mb-5.my-star
         .row
           .col-lg-4.ml-auto
             p.lead
@@ -271,7 +272,7 @@ html(lang='fa', dir='rtl')
     // Plugin JavaScript
     script(src='vendor/jquery-easing/jquery.easing.min.js')
     script(src='vendor/magnific-popup/jquery.magnific-popup.min.js')
-    // Contact Form JavaScript
+    //- // Contact Form JavaScript
     script(src='js/jqBootstrapValidation.js')
     script(src='js/contact_me.js')
     // Custom scripts for this template
