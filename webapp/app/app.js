@@ -17,7 +17,7 @@ const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ke
 if(!db){
   console.log('no connection to db')
 }
-
+console.log('started');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
