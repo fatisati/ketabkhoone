@@ -33,5 +33,14 @@
   color: #fff;
   background-color: #827ffe;
 }
-
-
+.navbar{  
+  background-color: #2C3E50;
+}
+.navbar-brand{
+  color: white;
+  font-family: nasim;
+}
+.nav-link{
+  color: white;
+  font-family: nasim;
+}
