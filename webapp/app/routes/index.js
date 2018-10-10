@@ -1,6 +1,7 @@
 var express = require('express');
 const book = require("../models/book.js");
 const user = require("../models/user.js");
+const author = require("../models/author.js");
 var router = express.Router();
 
 /* GET home page. */
@@ -77,11 +78,12 @@ router.get('/test', function (req, res) {
 router.post('/addbook', function (req, res) {
 
     var bookName = req.body.bookName;
-    var author = req.body.auther;
+    var a = new author({name : req.body.auther});  
+    a.save();
     //var image_path = req.files.path;
     var genere = req.body.genere;
 
-    let b = new book({ bookname: bookName, genre: genere, author: author })
+    let b = new book({ bookname: bookName, genre: genere, author: a })
     b.save(function (err, todos) {
         if (err) {
             // If it failed, return error
