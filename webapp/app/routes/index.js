@@ -97,32 +97,40 @@ router.post('/addbook', function (req, res) {
 
 router.post('/searchbook', function (req, res) {
 
-    bn = req.body.name.toString();
-    // ab = ""+req.body.author
+    bn = ""+req.body.name;
+        
+    book.find( { $or:[         
+                              {'bookname' : { "$regex":bn , $options: 'i' }}
+                     ]}          
+       , (err, b) => { 
+        if (err){
+            console.log(err)
+        }else{
+            // res.render("searchbyname");
+            var count = b.length
+            for (i = 0; i < count; i++) { 
+                console.log(" 1 book is "+b[i]);
+                aa = b[i].author;
+                author.find({_id : aa},(err,a)=>{
+                console.log("book author is " + a[0].first_name);
+            })
+            }
+        }
 
-    // book.find( { $or:[
-    //     {'bookname' : { "$regex": bn  }},
-    //     {'author' : { "$regex":bn  }}
-    //      ]  } 
-
-    book.find({
-        $or: [
-            { 'bookname': { "$regex": bn } }
-        ]
-    }
-        , (err, b) => {
-            if (err) {
+        author.find({'first_name':{ "$regex":bn , $options: 'i' } },(err,a)=>{
+            if (err){
                 console.log(err)
-            } else {
+            }else{
                 // res.render("searchbyname");
-                var count = b.length
-                res.send(b)
-                console.log(b)
-                // for (i = 0; i < count; i++) {
-                //     console.log("book is " + b[i]);
-                // }
+                var count = a.length
+                for (i = 0; i < count; i++) { 
+                    console.log(" 2 author is "+a[i]);
+                }
             }
         })
+
+
+    } )
 
 });
 
