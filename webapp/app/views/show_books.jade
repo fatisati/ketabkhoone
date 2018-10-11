@@ -15,15 +15,17 @@ html(dir='rtl', lang='fa')
     link(rel="stylesheet", href="css/custom.css")
   body
     // Navigation
-    +nav
+    if login
+      +nav([{name: 'اضافه کردن کتاب', href: '/registerbook'}, {name:'صفحه من', href: '/profile'}, {name:'خروج', href:''}])
+    else
+      +nav([])
     // Page Content
     .container
       h1.my-4 نتایج جست و جو :
       // <div class="row">
       .col-lg-12
         .row
-            +show_books([['/img/b3.jpg', 'اسم کتاب', 'نویسنده', 'خلاصه'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست'], ['./img/b1.jpg', 'سلام', 'نادر', 'تست']])
-            //- +show_books(['./img/b1.jpg', 'سلام', 'نادر', 'تست'])
+            +show_books(books)
         // /.row
         // /.col-lg-9
         // </div>

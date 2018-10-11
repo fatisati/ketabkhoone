@@ -1,3 +1,4 @@
+include mixins
 doctype html
 html(lang='fa', dir='rtl')
   head
@@ -20,23 +21,9 @@ html(lang='fa', dir='rtl')
     link(href='css/freelancer.css', rel='stylesheet')
     link(href='css/custom.css', rel='stylesheet', type='text/css')
   body#page-top
-    // Navigatioد
-    nav.navbar.navbar-inverse.navbar-expand-lg.fixed-top
-      a.navbar-brand(href='#') کتابخونه
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          li.nav-item
-            a.nav-link(href='/login') ورود
-          li.nav-item
-            a.nav-link(href='/signup') ثبت نام
-          
-        form.form-inline.my-2.my-lg-0(id='form-search', method='post', action='/searchbook')
-          input.form-control.mr-sm-2(type='search', name="name" , placeholder='جست و جوی کتاب', aria-label='Search')
-          button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
-
-    // Header
+    // Navigatio
+    +nav([{name: 'ورود', href: '/login'}, {name:'ثبت نام', href: '/signup'}])
+    // Header 
     header.masthead.bg-primary.text-white.text-center
       .container
         img.img-fluid.mb-5.d-block.mx-auto(src='img/logo.jpg', alt='logo')

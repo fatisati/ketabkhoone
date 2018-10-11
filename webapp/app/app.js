@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require("body-parser");
-
-
+// var busboy = require('connect-busboy');
+var multer = require('multer');
 
 // New Code
 //var db_url = 'mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh' //process.env.MONGODB_URI //process.env.MONGODB_URI //'localhost:27017/nodetest1'
@@ -22,7 +22,8 @@ console.log('started');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// app.use(busboy()); 
+app.use(multer({dest:__dirname+'/file/uploads/'}).any());
 
 var indexRouter = require('./routes/index');
 app.use('/', indexRouter);

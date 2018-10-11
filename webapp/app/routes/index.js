@@ -1,12 +1,18 @@
 var express = require('express');
 const book = require("../models/book.js");
 const user = require("../models/user.js");
-const author = require("../models/author.js");
+const authorModel = require("../models/author.js");
 var router = express.Router();
+var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('index', { fail: false });
+});
+
+router.get('/registerbook', function (req, res) {
+    res.render('register_book');
+
 });
 
 /* GET Hello World page. */
@@ -70,71 +76,91 @@ router.post('/auth', function (req, res) {
 
 });
 
-router.get('/test', function (req, res) {
-    res.render('show_books.jade');
-});
-
 
 router.post('/addbook', function (req, res) {
+    console.log('we are in add book.');
+    var bookName = req.body.name;
+    var author = req.body.author;
+    // var publisher = req.body.publisher;
+    // var year = req.body.year;
+    var genre = req.body.genre;
+    // var numPage = req.body.numPage;
+    var info = req.body.info;
+    var image_path = req.files[0].path;
+    // console.log(req.files)
+    let b = new book({ bookname: bookName, genre: genre, summary: info });
+    try {
+        var image = fs.readFileSync(image_path);
+        console.log('fs read the image');
 
-    var bookName = req.body.bookName;
-    var a = new author({name : req.body.auther});  
-    a.save();
-    //var image_path = req.files.path;
-    var genere = req.body.genere;
-
-    let b = new book({ bookname: bookName, genre: genere, author: a })
-    b.save(function (err, todos) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+    }
+    catch (e) {
+        console.log(e);
+    }
+    b.img.data = image;
+    b.img.contentType = req.files[0].mimetype;
+    authorModel.findOne({ name: author }, function (err, doc) {
+        if (doc) {
+            b.author = doc;
+            console.log('author '+author+' found in db.');
         }
         else {
-            console.log("book is registered");
-            // And forward to success page
-            res.send(bookName + "  book added.");
+            let a = new authorModel({ name: author });
+            a.save();
+            console.log('author '+author+' saved in db.');
+            b.author = a;
+            
         }
+        console.log('i an saving book with author: '+ b.author.name);
+        b.save(function (err) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.send(bookName + ' saved.');
+            }
+
+        });
     });
 });
 
 router.post('/searchbook', function (req, res) {
 
-    bn = ""+req.body.name;
-        
-    book.find( { $or:[         
-                              {'bookname' : { "$regex":bn , $options: 'i' }}
-                     ]}          
-       , (err, b) => { 
-        if (err){
+    bn = req.body.name;
+    console.log(bn)
+    book.find({$or: [{ 'bookname': { "$regex": bn, $options: 'i' } }]})
+    .populate('author')
+    .exec((err, b) => {
+        if (err) {
             console.log(err)
-        }else{
-            // res.render("searchbyname");
-            var count = b.length
-            for (i = 0; i < count; i++) { 
-                console.log(" 1 book is "+b[i]);
-                aa = b[i].author;
-                author.find({_id : aa},(err,a)=>{
-                console.log("book author is " + a[0].first_name);
-            })
-            }
+        } else {
+
+            res.render('show_books', {books : b, login : false});
+            // console.log('name:'+b[0].name)
+            // res.send(b[0].name);
         }
 
-        author.find({'first_name':{ "$regex":bn , $options: 'i' } },(err,a)=>{
-            if (err){
+        authorModel.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
+            if (err) {
                 console.log(err)
-            }else{
+            } else {
                 // res.render("searchbyname");
                 var count = a.length
-                for (i = 0; i < count; i++) { 
-                    console.log(" 2 author is "+a[i]);
+                for (i = 0; i < count; i++) {
+                    console.log(" 2 author is " + a[i]);
                 }
             }
         })
-
-
-    } )
+    });
 
 });
 
+router.get('/book/:id/image', function(req, res){
+    console.log('id is: '+req.params.id);
+    book.findById(req.params.id, function(err, b){
+        res.contentType(b.img.contentType);
+        res.send(b.img.data);
+    });
+});
 
 module.exports = router;
