@@ -117,7 +117,7 @@ router.post('/addbook', function (req, res) {
                 res.send(err);
             }
             else {
-                res.send(bookName + ' saved.');
+                res.redirect('/home');
             }
 
         });
@@ -158,8 +158,18 @@ router.post('/searchbook', function (req, res) {
 router.get('/book/:id/image', function(req, res){
     console.log('id is: '+req.params.id);
     book.findById(req.params.id, function(err, b){
-        res.contentType(b.img.contentType);
-        res.send(b.img.data);
+        if(err) console.log(err);
+        else{
+            if(b.img){
+                res.contentType(b.img.contentType);
+                res.send(b.img.data);
+            }
+            else{
+                // res.contentType('image/jpg');
+                res.send('no image');
+            }
+        }
+        
     });
 });
 
@@ -167,4 +177,20 @@ router.get('/profile', function(req, res){
     res.render('profile');
 });
 
+router.get('/allbooks', function(req, res){
+    book.find({'img':{$ne:null}})
+    .populate('author')
+    .exec((err, b) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.render('show_books', {books : b, login : false});
+        }
+    });
+});
+
+router.get('/delete', function(req, res){
+    book.find({}).remove().exec();
+    res.send('all deleted');
+})
 module.exports = router;
