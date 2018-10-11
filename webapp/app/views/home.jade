@@ -31,10 +31,10 @@ html(dir='rtl', lang='fa')
           .col-xl-9.mx-auto
             h1.mb-5 به کتابخونه خوش امدید:))
           .col-md-10.col-lg-8.col-xl-7.mx-auto
-            form
+            form(method = 'post', action='/searchbook')
               .form-row
                 .col-12.col-md-9.mb-2.mb-md-0
-                  input.form-control.form-control-lg(type='email', placeholder='کتاب مورد نظر خود را جست و جو کنید...')
+                  input.form-control.form-control-lg(type='search', placeholder='کتاب مورد نظر خود را جست و جو کنید...', name='name')
                 .col-12.col-md-3
                   button.btn.btn-block.btn-lg.btn-primary(type='submit') بگرد
     // Icons Grid
