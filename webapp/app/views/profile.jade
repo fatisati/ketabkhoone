@@ -1,0 +1,157 @@
+include mixins
+doctype html
+html(lang='fa', dir='rtl')
+  head
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    // <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    // <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    // Bootstrap core CSS
+    // <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    link(rel='stylesheet', href='https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css', integrity='sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.min.js')
+    link(href='./css/profile.css', rel='stylesheet', type='text/css')
+    link(href='./css/custom.css', rel='stylesheet', type='text/css')
+    script(type='text/javascript', src='./js/profile.js')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    // <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  body
+    //- +nav([{name: 'اضافه کردن کتاب', href: '/registerbook'}, {name:'صفحه من', href: '/profile'}, {name:'خروج', href:'/index'}])
+    .container
+      .row.user-menu-container.square
+        .col-md-7.user-details
+          .row.coralbg.white
+            .col-md-6.no-pad
+              .user-pad
+                h3 وجیهه ترحمی
+                h4.white
+                  i.fa.fa-check-circle-o ایمیل
+                h4.white
+                  i.fa.fa-twitter کتاب بخوانیم
+                button.btn.btn-labeled.btn-info(type='button', href='#')
+                  span.btn-label
+                    i.fa.fa-pencil
+                  | به روز رسانی
+            .col-md-6.no-pad
+              .user-image
+                img.img-responsive.thumbnail(src='https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg')
+          .row.overview
+            .col-md-4.user-pad.text-center
+              h3 تعداد کتاب های قرض داده
+              h4 2,784
+            .col-md-4.user-pad.text-center
+              h3 امتیاز
+              h4 456
+            .col-md-4.user-pad.text-center
+              h3 تعداد کتاب های قرض گرفته
+              h4 4,901
+        .col-md-1.user-menu-btns
+          #responsive.btn-group-vertical.square
+            a.btn.btn-block.btn-default.active(href='#')
+              i.fa.fa-bell-o.fa-3x
+            a.btn.btn-default(href='#')
+              i.fa.fa-envelope-o.fa-3x
+            a.btn.btn-default(href='#')
+              i.fa.fa-laptop.fa-3x
+            a.btn.btn-default(href='#')
+              i.fa.fa-cloud-upload.fa-3x
+        .col-md-4.user-menu.user-pad
+          .user-menu-content.active.text-center
+            h3
+              | کتاب های قرض گرفته شده
+            ul.user-menu-list
+              li
+                h4
+                  i.fa.fa-user.coral
+                  |  انسان و آزادی در اسلام
+              li
+                h4
+                  i.fa.fa-heart-o.coral
+                  |  فصل شیدایی لیلاها
+              li
+                h4
+                  i.fa.fa-paper-plane-o.coral
+                  |  نامیرا
+              li
+                button.btn.btn-labeled.btn-success(type='button', href='#')
+                  span.btn-label
+                    i.fa.fa-bell-o
+                  | لیست همه کتاب های قرض گرفته شده
+          .user-menu-content.text-center
+            h3
+              | کتاب های گذاشته شده
+            ul.user-menu-list
+              li
+                h4
+                  | خاطرات سفیر 
+                  small.coral
+                    i.fa.fa-clock-o
+                    | وضعیت
+              li
+                h4
+                  | پادشاهان پیاده 
+                  small.coral
+                    i.fa.fa-clock-o
+                    | وضعیت
+              li
+                h4
+                  | آنشرلی 
+                  small.coral
+                    i.fa.fa-clock-o
+                    | وضعیت
+              li
+                button.btn.btn-labeled.btn-success(type='button', href='#')
+                  span.btn-label
+                    i.fa.fa-envelope-o
+                  | لیست همه کتاب های گذاشته شده
+          .user-menu-content
+            h3.text-center
+              | کتاب های اهدا شده
+            ul.user-menu-list
+              li
+                h4
+                  i.fa.fa-user.coral
+                  |  انسان و آزادی در اسلام
+              li
+                h4
+                  i.fa.fa-heart-o.coral
+                  |  فصل شیدایی لیلاها
+              li
+                h4
+                  i.fa.fa-paper-plane-o.coral
+                  |  نامیرا
+              li
+                button.btn.btn-labeled.btn-success(type='button', href='#')
+                  span.btn-label
+                    i.fa.fa-bell-o
+                  | لیست همه کتاب های اهدا شده
+          .user-menu-content
+            h3.text-center
+              | کتاب های مورد علاقه
+            ul.user-menu-list
+              li
+                h4
+                  i.fa.fa-user.coral
+                  |  انسان و آزادی در اسلام
+              li
+                h4
+                  i.fa.fa-heart-o.coral
+                  |  فصل شیدایی لیلاها
+              li
+                h4
+                  i.fa.fa-paper-plane-o.coral
+                  |  نامیرا
+              li
+                button.btn.btn-labeled.btn-success(type='button', href='#')
+                  span.btn-label
+                    i.fa.fa-bell-o
+                  | لیست همه کتاب های مورد علاقه
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+    script(src='https://cdn.rtlcss.com/bootstrap/v4.0.0/js/bootstrap.min.js', integrity='sha384-54+cucJ4QbVb99v8dcttx/0JRx4FHMmhOWi4W+xrXpKcsKQodCBwAvu3xxkZAwsH', crossorigin='anonymous')
