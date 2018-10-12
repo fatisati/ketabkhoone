@@ -102,16 +102,16 @@ router.post('/addbook', function (req, res) {
     authorModel.findOne({ name: author }, function (err, doc) {
         if (doc) {
             b.author = doc;
-            console.log('author '+author+' found in db.');
+            console.log('author ' + author + ' found in db.');
         }
         else {
             let a = new authorModel({ name: author });
             a.save();
-            console.log('author '+author+' saved in db.');
+            console.log('author ' + author + ' saved in db.');
             b.author = a;
-            
+
         }
-        console.log('i an saving book with author: '+ b.author.name);
+        console.log('i an saving book with author: ' + b.author.name);
         b.save(function (err) {
             if (err) {
                 res.send(err);
@@ -128,69 +128,96 @@ router.post('/searchbook', function (req, res) {
 
     bn = req.body.name;
     console.log(bn)
-    book.find({$or: [{ 'bookname': { "$regex": bn, $options: 'i' } }]})
-    .populate('author')
-    .exec((err, b) => {
-        if (err) {
-            console.log(err)
-        } else {
-
-            res.render('show_books', {books : b, login : false});
-            // console.log('name:'+b[0].name)
-            // res.send(b[0].name);
-        }
-
-        authorModel.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
+    book.find({ $or: [{ 'bookname': { "$regex": bn, $options: 'i' } }] })
+        .populate('author')
+        .exec((err, b) => {
             if (err) {
                 console.log(err)
             } else {
-                // res.render("searchbyname");
-                var count = a.length
-                for (i = 0; i < count; i++) {
-                    console.log(" 2 author is " + a[i]);
-                }
+
+                res.render('show_books', { books: b, login: false });
+                // console.log('name:'+b[0].name)
+                // res.send(b[0].name);
             }
-        })
-    });
+
+            authorModel.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    // res.render("searchbyname");
+                    var count = a.length
+                    for (i = 0; i < count; i++) {
+                        console.log(" 2 author is " + a[i]);
+                    }
+                }
+            })
+        });
 
 });
 
-router.get('/book/:id/image', function(req, res){
-    console.log('id is: '+req.params.id);
-    book.findById(req.params.id, function(err, b){
-        if(err) console.log(err);
-        else{
-            if(b.img){
+router.get('/book/:id/image', function (req, res) {
+    // console.log('id is: ' + req.params.id);
+    book.findById(req.params.id, function (err, b) {
+        if (err) console.log(err);
+        else {
+            if (b.img) {
                 res.contentType(b.img.contentType);
                 res.send(b.img.data);
             }
-            else{
+            else {
                 // res.contentType('image/jpg');
                 res.send('no image');
             }
         }
-        
+
     });
 });
 
-router.get('/profile', function(req, res){
+router.get('/profile', function (req, res) {
     res.render('profile');
 });
 
-router.get('/allbooks', function(req, res){
-    book.find({'img':{$ne:null}})
-    .populate('author')
-    .exec((err, b) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.render('show_books', {books : b, login : false});
-        }
-    });
+router.get('/allbooks', function (req, res) {
+    book.find({ 'img': { $ne: null } })
+        .populate('author')
+        .exec((err, b) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.render('show_books', { books: b, login: false });
+            }
+        });
 });
 
-router.get('/delete', function(req, res){
-    book.find({}).remove().exec();
-    res.send('all deleted');
+// router.get('/delete', function(req, res){
+//     book.find({}).remove().exec();
+//     res.send('all deleted');
+// });
+
+router.get('/bookdetail/:id', function (req, res) {
+    book.findOne({})
+        .populate('author')
+        .exec(function (err, b) {
+            if (err) console.log(err);
+            else {
+                console.log(b.author.name)
+                res.render('book_detail', { book: b })
+            }
+
+        })
+})
+
+router.get('/test', function (req, res) {
+
+    book.findOne({})
+        .populate('author')
+        .exec(function (err, b) {
+            if (err) console.log(err);
+            else {
+                console.log(b.author.name)
+                res.render('book_detail', { book: b })
+            }
+
+        })
 })
 module.exports = router;

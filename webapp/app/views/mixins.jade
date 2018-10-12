@@ -12,24 +12,63 @@ mixin nav(items)
       form.form-inline.my-2.my-lg-0(id='form-search', method='post', action='/searchbook')
         input.form-control.mr-sm-2(type='search', name="name" , placeholder='جست و جوی کتاب', aria-label='Search')
         button.btn.btn-outline-success.my-2.my-sm-0(type='submit') بگرد
-mixin book_card(img_src, title, author, description)
-
+mixin book_card(img_src, title, author, description, id)
     .card.h-100
-        a(href='#')
-          img.card-img-top(src=img_src, alt='')
-        .card-body
-          h4.card-title
-            a(href='#')= title
-          h5= author
-          p.card-text= description
-        .card-footer
-          small.text-muted ★ ★ ★ ★ ☆
+      a(href='/bookdetail/'+id)
+        img.card-img-top(src=img_src, alt='')
+      .card-body
+        h4.card-title
+          a(href='#')= title
+        h5= author
+        p.card-text= description
+        .col-md-6
+          a.my-btn(href='/bookdetail/'+id) قرض
+      .card-footer
+        small.text-muted ★ ★ ★ ★ ☆
+
 
 mixin show_books(books)
 
   each book in books
       .col-lg-4.col-md-6.mb-4
-          +book_card('/book/'+book._id+'/image', book.bookname, book.author.name, book.summary)
+          +book_card('/book/'+book._id+'/image', book.bookname, book.author.name, book.summary, book._id)
+
+mixin footer
+  footer.footer.text-center.my-footer
+      .container
+        .row
+          .col-md-4.mb-5.mb-lg-0
+            h4.text-uppercase.mb-4 آدرس
+            p.lead.mb-0
+              | تهران دانشگاه صنعتی امیرکبیر
+              br
+              | خیابان حافظ پلاک 000
+          .col-md-4.mb-5.mb-lg-0
+            h4.text-uppercase.mb-4 ما را در شبکه های اجتماعی دنبال کنید
+            ul.list-inline.mb-0
+              li.list-inline-item
+                a.btn.btn-outline-light.btn-social.text-center.rounded-circle(href='#')
+                  i.fab.fa-fw.fa-facebook-f
+              li.list-inline-item
+                a.btn.btn-outline-light.btn-social.text-center.rounded-circle(href='#')
+                  i.fab.fa-fw.fa-google-plus-g
+              li.list-inline-item
+                a.btn.btn-outline-light.btn-social.text-center.rounded-circle(href='#')
+                  i.fab.fa-fw.fa-twitter
+              li.list-inline-item
+                a.btn.btn-outline-light.btn-social.text-center.rounded-circle(href='#')
+                  i.fab.fa-fw.fa-linkedin-in
+              li.list-inline-item
+                a.btn.btn-outline-light.btn-social.text-center.rounded-circle(href='#')
+                  i.fab.fa-fw.fa-dribbble
+          .col-md-4
+            h4.text-uppercase.mb-4 درباره ما
+            p.lead.mb-0
+              | جایی برای تبادل کتابهایتان
+              // <a href="http://startbootstrap.com">Start Bootstrap</a>.
+  .copyright.py-4.text-center.text-white
+    .container
+      small Copyright © Your Website 2018
 
         
             
