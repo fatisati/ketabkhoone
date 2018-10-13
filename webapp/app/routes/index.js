@@ -4,6 +4,7 @@ const user = require("../models/user.js");
 const authorModel = require("../models/author.js");
 var router = express.Router();
 var fs = require('fs');
+var sess;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -64,10 +65,22 @@ router.post('/adduser', function (req, res) {
 });
 
 router.post('/auth', function (req, res) {
-
+    sess=req.session;
     user.findOne({ 'username': req.body.email }, (err, u) => {
+        
         if (u) {
-            u.pass == req.body.pass ? res.redirect('/home') : res.render("login", { fail: true });
+            if(u.pass == req.body.pass){
+                res.redirect('/home') ;
+                sess.email = req.body.email;
+                sess.name = req.body.name;
+                sess.fname = req.body.fname;
+                sess.islogin = req.body.islogin;
+                sess.user = u;
+                console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+sess.user);
+            }else{
+                res.render("login", { fail: true })
+            }
+            // u.pass == req.body.pass ? res.redirect('/home') : res.render("login", { fail: true });
         } else {
             res.render("login", { fail: true });
             //res.status(400).send(e);    
@@ -87,8 +100,9 @@ router.post('/addbook', function (req, res) {
     // var numPage = req.body.numPage;
     var info = req.body.info;
     var image_path = req.files[0].path;
+    sess = req.session;
     // console.log(req.files)
-    let b = new book({ bookname: bookName, genre: genre, summary: info });
+    let b = new book({ bookname: bookName, genre: genre, summary: info, user : sess.user });
     try {
         var image = fs.readFileSync(image_path);
         console.log('fs read the image');
@@ -174,7 +188,9 @@ router.get('/book/:id/image', function (req, res) {
 });
 
 router.get('/profile', function (req, res) {
-    res.render('profile');
+    sess = req.session;
+    console.log(sess.user);
+    res.render('profile',{user : sess.user});
 });
 
 router.get('/allbooks', function (req, res) {

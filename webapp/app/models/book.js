@@ -11,5 +11,6 @@ const bookModel = new Schema({
   due_back: { type: Date, default: Date.now },
   status: { type: String, required: true, enum: ['Available', 'Maintenance', 'Loaned', 'Reserved'], default: 'Maintenance' },
   img: { data: Buffer, contentType: String },
+  user :{type: Schema.ObjectId, ref: 'User'}
 })
 module.exports = mongoose.model('Book', bookModel)
