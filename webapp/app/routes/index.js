@@ -70,14 +70,14 @@ router.post('/auth', function (req, res) {
         
         if (u) {
             if(u.pass == req.body.pass){
-                res.redirect('/home') ;
                 sess.email = req.body.email;
                 sess.name = req.body.name;
                 sess.fname = req.body.fname;
                 sess.islogin = req.body.islogin;
                 sess.user = u;
-                console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+sess.user);
-            }else{
+                // console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+sess.user);
+                res.redirect('/home') ;
+                }else{
                 res.render("login", { fail: true })
             }
             // u.pass == req.body.pass ? res.redirect('/home') : res.render("login", { fail: true });
@@ -189,7 +189,7 @@ router.get('/book/:id/image', function (req, res) {
 
 router.get('/profile', function (req, res) {
     sess = req.session;
-    console.log(sess.user);
+    console.log("proffffffffffffffffffffffffff"+sess.user);
     res.render('profile',{user : sess.user});
 });
 

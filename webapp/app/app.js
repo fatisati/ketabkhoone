@@ -14,7 +14,7 @@ var session = require('express-session');
 var mongoose = require("mongoose");
 mongoose.plugin(require('mongoose-regex-search'));
 //var db = monk(db_url);
-const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh');
+const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh',{ useNewUrlParser: true });
 // const db = mongoose.connect(process.env.MONGODB_URI);
 if(!db){
   console.log('no connection to db')
@@ -25,7 +25,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(busboy()); 
 app.use(multer({dest:__dirname+'/file/uploads/'}).any());
-app.use(session({secret: 'ssshhhhh'}));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 
 var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
