@@ -18,7 +18,9 @@ html(lang='fa', dir='rtl')
     // Plugin CSS
     link(href='vendor/magnific-popup/magnific-popup.css', rel='stylesheet', type='text/css')
     // Custom styles for this template
+    
     link(href='css/freelancer.css', rel='stylesheet')
+    //- link(href='css/landing-page.min.css', rel='stylesheet')
     link(href='css/custom.css', rel='stylesheet', type='text/css')
   body#page-top
     // Navigatio
@@ -30,6 +32,42 @@ html(lang='fa', dir='rtl')
         h1.text-uppercase.mb-0 کتابخونه
         hr.star-light
         h2.font-weight-light.mb-0 محلی برای تبادل کتابهایتان:)
+    // About Section
+    //- section#about.bg-primary.text-white.mb-0
+    // Image Showcases
+    section#about.bg-primary.text-white.mb-0
+      .container
+        .row
+          .col-lg-8.mx-auto.text-center
+            h2.section-heading.text-white دنبال یک کتابخونه خوب می گردید؟
+            hr.light.my-4
+            p.text-faded.mb-4
+             اینجا می تونید کتابایی که دنبالشونید رو قرض بگیرید! 
+            a.btn.btn-outline-success.my-2.dark-btn(href='/signup') ثبت نام و ورود
+
+    section.showcase
+      .container-fluid.p-0
+        .row.no-gutters
+          .col-lg-6.order-lg-2.text-white.showcase-img(style="background-image: url('img/a.jpg');")
+          .col-lg-6.order-lg-1.my-auto.showcase-text
+            h2 دیگه همش کتاب نخرید
+            p.lead.mb-0
+              | خیلی وقتا ادم فکر می کنه کاش می شد به جای اینکه یک کتابو بخره قرض می گرفتش. اینجا این امکان فراهم شده. به جای اینکه مجبور باشید همش کتاب بخرید می تونید کتاب مورد علاقه خودتون رو قرض بگیرید.
+        .row.no-gutters
+          .col-lg-6.text-white.showcase-img(style="background-image: url('img/shelf2.jpg');")
+          .col-lg-6.my-auto.showcase-text
+            h2 کتاب ها دارن تو کتابخونتون خاک می خورن؟
+            p.lead.mb-0
+              می تونید به بقیه قرض بدیدشون و دیگه نگران گم شدنشون نباشید. خیلی وقتا ادم دلش نمی خواد کتاباش رو به بقیه قرض بده از ترس اینکه گم و گور بشن. یا اینکه قرض گیرنده یادش بره کتاب رو پس بده و خودد ادم هم بعد یه مدت یادش بره کتابش رو به کی قرض داده. توی این سیستم هر قرض کتاب ثبت میشه و در نتیجه قرض دهنده و قرض گیرنده یادشون نمیره که کتاب رو به کی قرض دادن یا از کی قرض گرفتن. از طرفی برای هر قرض مهلتی تعیین میشه پس کتاب شما به صورت نامحدود دست قرض گیرنده نمی مونه و سر موعد تحویل به قرض گیرنده یاداوری میشه که کتاب رو پس بده.
+        //- .row.no-gutters
+        //-   .col-lg-6.order-lg-2.text-white.showcase-img(style="background-image: url('img/bg-showcase-3.jpg');")
+        //-   .col-lg-6.order-lg-1.my-auto.showcase-text
+        //-     h2 Easy to Use & Customize
+        //-     p.lead.mb-0
+        //-       | Landing Page is just HTML and CSS with a splash of SCSS for users who demand some
+        //-       | deeper customization options. Out of the box, just add your content and images, and your new landing page
+        //-       | will be ready to go!
+    
     // Portfolio Grid Section
     section#portfolio.portfolio
       .container
@@ -67,7 +105,6 @@ html(lang='fa', dir='rtl')
                 .portfolio-item-caption-content.my-auto.w-100.text-center.text-white
                   i.fas.fa-search-plus.fa-3x
               img.img-fluid(src='img/developers/mahbobeh.png', alt='')
-    // About Section
     section#about.bg-primary.text-white.mb-0
       .container
         h2.text-center.text-uppercase.text-white درباره ما
@@ -135,6 +172,7 @@ html(lang='fa', dir='rtl')
       </div>
       </div>
       </section>
+      
     // Footer
     footer.footer.text-center
       .container

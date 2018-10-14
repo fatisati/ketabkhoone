@@ -195,7 +195,7 @@ router.get('/allbooks', function (req, res) {
 // });
 
 router.get('/bookdetail/:id', function (req, res) {
-    book.findOne({})
+    book.findById(req.params.id)
         .populate('author')
         .exec(function (err, b) {
             if (err) console.log(err);
