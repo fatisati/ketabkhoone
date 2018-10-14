@@ -6,7 +6,7 @@ var logger = require('morgan');
 var bodyParser = require("body-parser");
 // var busboy = require('connect-busboy');
 var multer = require('multer');
-var session = require('express-session');
+var session = require('client-sessions');
 
 // New Code
 //var db_url = 'mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh' //process.env.MONGODB_URI //process.env.MONGODB_URI //'localhost:27017/nodetest1'
@@ -26,10 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(busboy()); 
 app.use(multer({dest:__dirname+'/file/uploads/'}).any());
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
 }));
 
 var indexRouter = require('./routes/index');

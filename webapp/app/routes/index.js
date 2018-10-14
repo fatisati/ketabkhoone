@@ -4,7 +4,7 @@ const user = require("../models/user.js");
 const authorModel = require("../models/author.js");
 var router = express.Router();
 var fs = require('fs');
-var sess;
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -65,17 +65,16 @@ router.post('/adduser', function (req, res) {
 });
 
 router.post('/auth', function (req, res) {
-    sess=req.session;
     user.findOne({ 'username': req.body.email }, (err, u) => {
         
         if (u) {
             if(u.pass == req.body.pass){
-                sess.email = req.body.email;
-                sess.name = req.body.name;
-                sess.fname = req.body.fname;
-                sess.islogin = req.body.islogin;
-                sess.user = u;
-                // console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+sess.user);
+                req.session.email = req.body.email;
+                req.session.name = req.body.name;
+                req.session.fname = req.body.fname;
+                req.session.islogin = req.body.islogin;
+                req.session.user = u;
+                // console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+req.session.user);
                 res.redirect('/home') ;
                 }else{
                 res.render("login", { fail: true })
@@ -100,9 +99,9 @@ router.post('/addbook', function (req, res) {
     // var numPage = req.body.numPage;
     var info = req.body.info;
     var image_path = req.files[0].path;
-    sess = req.session;
+    // sess = req.session;
     // console.log(req.files)
-    let b = new book({ bookname: bookName, genre: genre, summary: info, user : sess.user });
+    let b = new book({ bookname: bookName, genre: genre, summary: info, user : req.session.user });
     try {
         var image = fs.readFileSync(image_path);
         console.log('fs read the image');
@@ -188,9 +187,9 @@ router.get('/book/:id/image', function (req, res) {
 });
 
 router.get('/profile', function (req, res) {
-    sess = req.session;
-    console.log("proffffffffffffffffffffffffff"+sess.user);
-    res.render('profile',{user : sess.user});
+    // sess = req.session;
+    // console.log("proffffffffffffffffffffffffff  "+req.session.user.username);
+    res.render('profile',{user : req.session.user});
 });
 
 router.get('/allbooks', function (req, res) {
@@ -211,7 +210,7 @@ router.get('/allbooks', function (req, res) {
 // });
 
 router.get('/bookdetail/:id', function (req, res) {
-    book.findOne({})
+    book.findById(req.params.id)
         .populate('author')
         .exec(function (err, b) {
             if (err) console.log(err);
@@ -225,15 +224,16 @@ router.get('/bookdetail/:id', function (req, res) {
 
 router.get('/test', function (req, res) {
 
-    book.findOne({})
-        .populate('author')
-        .exec(function (err, b) {
-            if (err) console.log(err);
-            else {
-                console.log(b.author.name)
-                res.render('book_detail', { book: b })
-            }
+    console.log("hello");
+    // book.findOne({})
+    //     .populate('author')
+    //     .exec(function (err, b) {
+    //         if (err) console.log(err);
+    //         else {
+    //             console.log(b.author.name)
+    //             res.render('book_detail', { book: b })
+    //         }
 
-        })
+    //     })
 })
 module.exports = router;
