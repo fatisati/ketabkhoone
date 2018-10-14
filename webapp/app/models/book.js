@@ -7,6 +7,7 @@ const bookModel = new Schema({
   summary: { type: String},
   // isbn: { type: String, required: true },
   // genre: [{ type: Schema.ObjectId, ref: 'Genre' }],
+  owner : { type: Schema.ObjectId, ref: 'User'},
   genre: { type: String},
   due_back: { type: Date, default: Date.now },
   status: { type: String, required: true, enum: ['Available', 'Maintenance', 'Loaned', 'Reserved'], default: 'Maintenance' },
