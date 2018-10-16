@@ -156,7 +156,7 @@ router.post('/searchbook', function (req, res) {
                 // res.send(b[0].name);
             }
 
-            authorModel.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
+            book.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
                 if (err) {
                     console.log(err)
                 } else {
@@ -227,16 +227,16 @@ router.get('/bookdetail/:id', function (req, res) {
 
 router.get('/test', function (req, res) {
 
-    console.log("hello");
-    // book.findOne({})
-    //     .populate('author')
-    //     .exec(function (err, b) {
-    //         if (err) console.log(err);
-    //         else {
-    //             console.log(b.author.name)
-    //             res.render('book_detail', { book: b })
-    //         }
+    // console.log("hello");
+    book.findOne({})
+        .populate('author')
+        .exec(function (err, b) {
+            if (err) console.log(err);
+            else {
+                console.log(b.author.name)
+                res.render('book_detail', { book: b })
+            }
 
-    //     })
+        })
 })
 module.exports = router;
