@@ -230,7 +230,13 @@ router.get('/allbooks', function (req, res) {
 // });
 
 router.get('/bookdetail/:id', function (req, res) {
-    book.findById(req.params.id)
+    req.session.id = req.params.id
+    res.redirect('/bookdetail')
+})
+
+router.get('/bookdetail', function(req, res){
+    // res.send(req.session.id)
+    book.findById(req.session.id)
         .populate('author')
         .exec(function (err, b) {
             if (err) console.log(err);
@@ -239,9 +245,8 @@ router.get('/bookdetail/:id', function (req, res) {
                 res.render('book_detail', { book: b })
             }
 
-        })
+    })
 })
-
 router.get('/test', function (req, res) {
 
     // console.log("hello");
