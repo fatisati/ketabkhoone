@@ -38,7 +38,11 @@ router.get('/login', function (req, res) {
 
 router.get('/home', function (req, res) {
     // check if the user's credentials are saved in a cookie //
-    res.render('home');
+    if(req.session.user){
+        res.render('home');
+    }else{
+        res.render('login');  
+    }
 });
 
 
@@ -74,7 +78,6 @@ router.post('/auth', function (req, res) {
                 req.session.fname = req.body.fname;
                 req.session.islogin = req.body.islogin;
                 req.session.user = u;
-                // console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+req.session.user);
                 res.redirect('/home') ;
                 }else{
                 res.render("login", { fail: true })
