@@ -6,7 +6,7 @@ var logger = require('morgan');
 var bodyParser = require("body-parser");
 // var busboy = require('connect-busboy');
 var multer = require('multer');
-var session = require('express-session');
+var session = require('client-sessions');
 
 // New Code
 //var db_url = 'mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh' //process.env.MONGODB_URI //process.env.MONGODB_URI //'localhost:27017/nodetest1'
@@ -14,7 +14,7 @@ var session = require('express-session');
 var mongoose = require("mongoose");
 mongoose.plugin(require('mongoose-regex-search'));
 //var db = monk(db_url);
-const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh');
+const db = mongoose.connect('mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh',{ useNewUrlParser: true });
 // const db = mongoose.connect(process.env.MONGODB_URI);
 if(!db){
   console.log('no connection to db')
@@ -25,7 +25,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(busboy()); 
 app.use(multer({dest:__dirname+'/file/uploads/'}).any());
-app.use(session({secret: 'ssshhhhh'}));
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
