@@ -8,7 +8,20 @@ var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    console.log("index "+req.session.user);
     res.render('index', { fail: false });
+});
+
+router.get('/logout', function (req, res) {
+
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect('/');
+        }
+    });
+
 });
 
 router.get('/registerbook', function (req, res) {
@@ -38,7 +51,9 @@ router.get('/login', function (req, res) {
 
 router.get('/home', function (req, res) {
     // check if the user's credentials are saved in a cookie //
-    if(req.session.user){
+    if(req.session.user != undefined){
+        // console.log("go home");
+        // console.log(req.session.user)
         res.render('home');
     }else{
         res.render('login');  
@@ -90,6 +105,8 @@ router.post('/auth', function (req, res) {
     })
 
 });
+
+
 
 
 router.post('/addbook', function (req, res) {

@@ -485,8 +485,9 @@ mark,
 }
 
 .img-fluid {
-  max-width: 100%;
-  height: 300px;
+  /* max-width: npm start0%; */
+  height: 50px;
+  width: 50px;
   border-radius: 100%;
 }
 
