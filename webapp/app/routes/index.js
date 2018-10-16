@@ -70,13 +70,14 @@ router.post('/auth', function (req, res) {
         
         if (u) {
             if(u.pass == req.body.pass){
-                res.redirect('/home') ;
+                
                 sess.email = req.body.email;
                 sess.name = req.body.name;
                 sess.fname = req.body.fname;
                 sess.islogin = req.body.islogin;
                 sess.user = u;
-                console.log("loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"+sess.user);
+                console.log("here: "+sess.user);
+                res.redirect('/test') ;
             }else{
                 res.render("login", { fail: true })
             }
@@ -225,15 +226,16 @@ router.get('/bookdetail/:id', function (req, res) {
 
 router.get('/test', function (req, res) {
 
-    book.findOne({})
-        .populate('author')
-        .exec(function (err, b) {
-            if (err) console.log(err);
-            else {
-                console.log(b.author.name)
-                res.render('book_detail', { book: b })
-            }
+    // book.findOne({})
+    //     .populate('author')
+    //     .exec(function (err, b) {
+    //         if (err) console.log(err);
+    //         else {
+    //             console.log(b.author.name)
+    //             res.render('book_detail', { book: b })
+    //         }
 
-        })
+    //     })
+    res.send(req.session.user.name)
 })
 module.exports = router;
