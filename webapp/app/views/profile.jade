@@ -26,9 +26,9 @@ html(lang='fa', dir='rtl')
           .row.coralbg.white
             .col-md-6.no-pad
               .user-pad
-                h3= user.username
+                h3= user.name + user.fname
                 h4.white
-                  i.fa.fa-check-circle-o ایمیل
+                  i.fa.fa-check-circle-o= user.username
                 h4.white
                   i.fa.fa-twitter کتاب بخوانیم
                 button.btn.btn-labeled.btn-info(type='button', href='#')

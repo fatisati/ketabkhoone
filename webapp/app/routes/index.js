@@ -163,27 +163,27 @@ router.post('/searchbook', function (req, res) {
     console.log(bn)
     book.find({ $or: [{ 'bookname': { "$regex": bn, $options: 'i' } }] })
         .populate('author')
-        .exec((err, b) => {
-            if (err) {
-                console.log(err)
-            } else {
-
-                res.render('show_books', { books: b, login: false });
-                // console.log('name:'+b[0].name)
-                // res.send(b[0].name);
-            }
-
-            book.find({ 'first_name': { "$regex": bn, $options: 'i' } }, (err, a) => {
+        .exec((err, b1) => {
+            var count1 = b1.length
+            author.find({ 'name': { "$regex": bn, $options: 'i' } }, (err, b2) => {
                 if (err) {
                     console.log(err)
                 } else {
                     // res.render("searchbyname");
-                    var count = a.length
-                    for (i = 0; i < count; i++) {
-                        console.log(" 2 author is " + a[i]);
+                    var count2 = b2.length
+                    for (i = 0; i < count2; i++) {
+                        b1[count1 + i] = b2[i];
+                        console.log(" 2 author is " + b2[i]);
                     }
                 }
             })
+            if (err) {
+                console.log(err)
+            } else {                
+                res.render('show_books', { books: b1, login: false });
+            }
+
+            
         });
 
 });
@@ -219,6 +219,15 @@ router.get('/allbooks', function (req, res) {
             if (err) {
                 console.log(err)
             } else {
+                //BASED ON SCORE OF BOOK
+                book_score = [];
+                b.sort(  (a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 :0)  );
+                var count = b.length
+                for (i = 0; i < count; i++) {
+                    book_score[i] = b[i];
+                    console.log("author is " +  b[i]);
+                    console.log("author is " +  book_score[i]);
+                }
                 res.render('show_books', { books: b, login: false });
             }
         });
