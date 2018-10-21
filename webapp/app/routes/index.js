@@ -173,7 +173,7 @@ router.post('/searchbook', function (req, res) {
                     var count2 = b2.length
                     for (i = 0; i < count2; i++) {
                         b1[count1 + i] = b2[i];
-                        console.log(" 2 author is " + b2[i]);
+                        //console.log(" 2 author is " + b2[i]);
                     }
                 }
             })
@@ -225,8 +225,8 @@ router.get('/allbooks', function (req, res) {
                 var count = b.length
                 for (i = 0; i < count; i++) {
                     book_score[i] = b[i];
-                    console.log("author is " +  b[i]);
-                    console.log("author is " +  book_score[i]);
+                    // console.log("author is " +  b[i]);
+                    // console.log("author is " +  book_score[i]);
                 }
                 res.render('show_books', { books: b, login: false });
             }
