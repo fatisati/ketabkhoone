@@ -179,7 +179,41 @@ router.post('/searchbook', function (req, res) {
             })
             if (err) {
                 console.log(err)
-            } else {                
+            } else {   
+                //for show
+                //BASED ON SCORE OF BOOK
+                book_score = [];
+                b1.sort(  (a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 :0)  );
+                var count = b1.length
+                for (i = 0; i < count; i++) {
+                    book_score[i] = b1[i];
+                    // console.log("author is " +  b[i]);
+                    // console.log("author is " +  book_score[i]);
+                }
+                //BASED ON ISBN OF BOOK
+                 book_isbn = [];
+                 b1.sort(  (a,b) => {
+                     // a = a.toLowerCase();
+                     // b = b.toLowerCase();
+                     if (a.isbn < b.isbn) return 1;
+                     if (a.isbn > b.isbn) return -1;
+                     return 0;
+                 });                
+                 for (i = 0; i < count; i++) {
+                     book_isbn[i] = b1[i];
+                 }
+                 //BASED ON borrowNum OF BOOK
+                 book_borrowNum = [];
+                 b1.sort(  (a,b) => {
+                     // a = a.toLowerCase();
+                     // b = b.toLowerCase();
+                     if (aborrowNum < bborrowNum) return 1;
+                     if (a.borrowNum > b.borrowNum) return -1;
+                     return 0;
+                 });                
+                 for (i = 0; i < count; i++) {
+                     book_borrowNum[i] = b1[i];
+                 }             
                 res.render('show_books', { books: b1, login: false });
             }
 
@@ -227,6 +261,30 @@ router.get('/allbooks', function (req, res) {
                     book_score[i] = b[i];
                     // console.log("author is " +  b[i]);
                     // console.log("author is " +  book_score[i]);
+                }
+                //BASED ON ISBN OF BOOK
+                book_isbn = [];
+                b.sort(  (a,b) => {
+                    // a = a.toLowerCase();
+                    // b = b.toLowerCase();
+                    if (a.isbn < b.isbn) return 1;
+                    if (a.isbn > b.isbn) return -1;
+                    return 0;
+                });                
+                for (i = 0; i < count; i++) {
+                    book_isbn[i] = b[i];
+                }
+                //BASED ON borrowNum OF BOOK
+                book_borrowNum = [];
+                b.sort(  (a,b) => {
+                    // a = a.toLowerCase();
+                    // b = b.toLowerCase();
+                    if (aborrowNum < bborrowNum) return 1;
+                    if (a.borrowNum > b.borrowNum) return -1;
+                    return 0;
+                });                
+                for (i = 0; i < count; i++) {
+                    book_borrowNum[i] = b[i];
                 }
                 res.render('show_books', { books: b, login: false });
             }
