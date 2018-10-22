@@ -1,0 +1,60 @@
+include mixins
+doctype html
+html(dir='rtl', lang='fa')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title= book.bookname
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css', integrity='sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz', crossorigin='anonymous')
+    // Custom fonts for this template
+    link(href='vendor/fontawesome-free/css/all.min.css', rel='stylesheet')
+    link(href='vendor/simple-line-icons/css/simple-line-icons.css', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic', rel='stylesheet', type='text/css')
+    // Custom styles for this template
+    link(href='css/book_detail.css', rel='stylesheet')
+    link(rel="stylesheet", href="css/custom.css")
+  body
+    // Navigation
+    +nav([{name:'نمایش همه کتاب ها', href:'/allbooks'},{name: 'اضافه کردن کتاب', href: '/registerbook'}, {name:'صفحه من', href: '/profile'}, {name:'خروج', href:''}])
+    // Page Content
+    .container
+      // Portfolio Item Heading
+      h1.my-4= book.bookname
+      h4.my-4= book.author.name
+      // Portfolio Item Row
+      .row
+        .col-md-6
+          img.img-fluid(src='/book/'+book._id+'/image', alt='')
+        .col-md-6
+        
+          h3.my-3 قرض دهندگان کتاب
+          .col-md-2
+
+            
+          
+      
+              .row
+          .col-md-6
+            #list-tab.list-group(role='tablist')
+              a#list-home-list.list-group-item.list-group-item-action.active(data-toggle='list', href='#list-home', role='tab', aria-controls='home') Home
+              a#list-profile-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-profile', role='tab', aria-controls='profile') Profile
+              a#list-messages-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-messages', role='tab', aria-controls='messages') Messages
+              a#list-settings-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-settings', role='tab', aria-controls='settings') Settings
+          
+      // /.row
+      // Related Projects Row
+   
+      // /.row
+      // /.container
+      // Footer
+    br
+    
+    +footer
+    
+    // /.container
+    // Bootstrap core JavaScript
+    script(src='vendor/jquery/jquery.min.js')
+    script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
