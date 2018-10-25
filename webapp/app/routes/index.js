@@ -8,19 +8,32 @@ var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    console.log("index "+req.session.user);
-    res.render('index', { fail: false });
+    // session = COOKIE['islogin'];    
+    // res.cookie(islogin , false, {expire : new Date() + 9999});
+    console.log("Cookies index  ", req.cookies.islogin);
+    if(req.cookies.islogin === 'true'){
+        // console.log("go home");
+        console.log("cookie index2 "+req.cookies.islogin);
+        res.redirect('/home');
+    }else{
+        console.log("okkkk logout");
+        res.render('index');  
+    }
+    // res.render('index', { fail: false });
 });
 
 router.get('/logout', function (req, res) {
 
-    req.session.destroy(function(err){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect('/');
-        }
-    });
+    // req.session.destroy(function(err){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         res.redirect('/');
+    //     }
+    // });
+    res.cookie('islogin' , false);
+    console.log("Cookies logout ", req.cookies.islogin);
+    res.redirect('/');
 
 });
 
@@ -51,9 +64,17 @@ router.get('/login', function (req, res) {
 
 router.get('/home', function (req, res) {
     // check if the user's credentials are saved in a cookie //
-    if(req.session.user != undefined){
+    // if(req.session.user != undefined){
+    //     // console.log("go home");
+    //     // console.log(req.session.user)
+    //     res.render('home');
+    // }else{
+    //     res.render('login');  
+    // }
+    console.log("cookie home"+req.cookies.islogin)
+    if(req.cookies.islogin==='true'){
         // console.log("go home");
-        // console.log(req.session.user)
+        console.log("cookie yessss");
         res.render('home');
     }else{
         res.render('login');  
@@ -93,6 +114,8 @@ router.post('/auth', function (req, res) {
                 req.session.fname = req.body.fname;
                 req.session.islogin = req.body.islogin;
                 req.session.user = u;
+                res.cookie('islogin' , true, {expire : new Date() + 9999});
+                console.log("cookie auth "+req.cookies.islogin);
                 res.redirect('/home') ;
                 }else{
                 res.render("login", { fail: true })
