@@ -313,6 +313,10 @@ router.get('/bookdetail/:id', function (req, res) {
     res.redirect('/bookdetail')
 })
 
+router.get('/borrow', function (req, res) {
+    res.render('/borrow_book');
+})
+
 router.get('/bookdetail', function(req, res){
     // res.send(req.session.id)
     book.findById(req.session.id)
