@@ -70,6 +70,9 @@
   -moz-transition: all 0.4s;
   transition: all 0.4s;
   text-decoration: none;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .my-btn:hover {
@@ -104,4 +107,9 @@
   .showcase .showcase-text {
     padding: 7rem;
   }
+}
+
+.margin {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
