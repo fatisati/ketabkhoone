@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 // var busboy = require('connect-busboy');
 var multer = require('multer');
 var session = require('client-sessions');
+var cookieParser = require('cookie-parser');
 
 // New Code
 //var db_url = 'mongodb://maryam:m123456@ds119273.mlab.com:19273/ketabkhooneh' //process.env.MONGODB_URI //process.env.MONGODB_URI //'localhost:27017/nodetest1'
@@ -31,6 +32,7 @@ app.use(session({
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
 }));
+app.use(cookieParser());
 
 var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
@@ -50,6 +52,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
+    // var cookie = req.cookies.cookieName;
+    // if (cookie === undefined)
+    // {
+    //   // no: set a new cookie
+    //   var islogin = false;
+    //   res.cookie('cookieName',islogin, { maxAge: 900000, httpOnly: true });
+    //   console.log('cookie created successfully');
+    // } 
+    // else
+    // {
+    //   // yes, cookie was already present 
+    //   console.log('cookie exists', cookie);
+    // } 
     next();
 });
 

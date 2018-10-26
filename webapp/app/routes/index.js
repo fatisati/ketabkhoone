@@ -8,19 +8,32 @@ var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    console.log("index "+req.session.user);
-    res.render('index', { fail: false });
+    // session = COOKIE['islogin'];    
+    // res.cookie(islogin , false, {expire : new Date() + 9999});
+    console.log("Cookies index  ", req.cookies.islogin);
+    if(req.cookies.islogin === 'true'){
+        // console.log("go home");
+        console.log("cookie index2 "+req.cookies.islogin);
+        res.redirect('/home');
+    }else{
+        console.log("okkkk logout");
+        res.render('index');  
+    }
+    // res.render('index', { fail: false });
 });
 
 router.get('/logout', function (req, res) {
 
-    req.session.destroy(function(err){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect('/');
-        }
-    });
+    // req.session.destroy(function(err){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         res.redirect('/');
+    //     }
+    // });
+    res.cookie('islogin' , false);
+    console.log("Cookies logout ", req.cookies.islogin);
+    res.redirect('/');
 
 });
 
@@ -51,9 +64,17 @@ router.get('/login', function (req, res) {
 
 router.get('/home', function (req, res) {
     // check if the user's credentials are saved in a cookie //
-    if(req.session.user != undefined){
+    // if(req.session.user != undefined){
+    //     // console.log("go home");
+    //     // console.log(req.session.user)
+    //     res.render('home');
+    // }else{
+    //     res.render('login');  
+    // }
+    console.log("cookie home"+req.cookies.islogin)
+    if(req.cookies.islogin==='true'){
         // console.log("go home");
-        // console.log(req.session.user)
+        console.log("cookie yessss");
         res.render('home');
     }else{
         res.render('login');  
@@ -93,6 +114,8 @@ router.post('/auth', function (req, res) {
                 req.session.fname = req.body.fname;
                 req.session.islogin = req.body.islogin;
                 req.session.user = u;
+                res.cookie('islogin' , true, {expire : new Date() + 9999});
+                console.log("cookie auth "+req.cookies.islogin);
                 res.redirect('/home') ;
                 }else{
                 res.render("login", { fail: true })
@@ -173,13 +196,47 @@ router.post('/searchbook', function (req, res) {
                     var count2 = b2.length
                     for (i = 0; i < count2; i++) {
                         b1[count1 + i] = b2[i];
-                        console.log(" 2 author is " + b2[i]);
+                        //console.log(" 2 author is " + b2[i]);
                     }
                 }
             })
             if (err) {
                 console.log(err)
-            } else {                
+            } else {   
+                //for show
+                //BASED ON SCORE OF BOOK
+                book_score = [];
+                b1.sort(  (a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 :0)  );
+                var count = b1.length
+                for (i = 0; i < count; i++) {
+                    book_score[i] = b1[i];
+                    // console.log("author is " +  b[i]);
+                    // console.log("author is " +  book_score[i]);
+                }
+                //BASED ON ISBN OF BOOK
+                 book_isbn = [];
+                 b1.sort(  (a,b) => {
+                     // a = a.toLowerCase();
+                     // b = b.toLowerCase();
+                     if (a.isbn < b.isbn) return 1;
+                     if (a.isbn > b.isbn) return -1;
+                     return 0;
+                 });                
+                 for (i = 0; i < count; i++) {
+                     book_isbn[i] = b1[i];
+                 }
+                 //BASED ON borrowNum OF BOOK
+                 book_borrowNum = [];
+                 b1.sort(  (a,b) => {
+                     // a = a.toLowerCase();
+                     // b = b.toLowerCase();
+                     if (aborrowNum < bborrowNum) return 1;
+                     if (a.borrowNum > b.borrowNum) return -1;
+                     return 0;
+                 });                
+                 for (i = 0; i < count; i++) {
+                     book_borrowNum[i] = b1[i];
+                 }             
                 res.render('show_books', { books: b1, login: false });
             }
 
@@ -225,8 +282,32 @@ router.get('/allbooks', function (req, res) {
                 var count = b.length
                 for (i = 0; i < count; i++) {
                     book_score[i] = b[i];
-                    console.log("author is " +  b[i]);
-                    console.log("author is " +  book_score[i]);
+                    // console.log("author is " +  b[i]);
+                    // console.log("author is " +  book_score[i]);
+                }
+                //BASED ON ISBN OF BOOK
+                book_isbn = [];
+                b.sort(  (a,b) => {
+                    // a = a.toLowerCase();
+                    // b = b.toLowerCase();
+                    if (a.isbn < b.isbn) return 1;
+                    if (a.isbn > b.isbn) return -1;
+                    return 0;
+                });                
+                for (i = 0; i < count; i++) {
+                    book_isbn[i] = b[i];
+                }
+                //BASED ON borrowNum OF BOOK
+                book_borrowNum = [];
+                b.sort(  (a,b) => {
+                    // a = a.toLowerCase();
+                    // b = b.toLowerCase();
+                    if (aborrowNum < bborrowNum) return 1;
+                    if (a.borrowNum > b.borrowNum) return -1;
+                    return 0;
+                });                
+                for (i = 0; i < count; i++) {
+                    book_borrowNum[i] = b[i];
                 }
                 res.render('show_books', { books: b, login: false });
             }

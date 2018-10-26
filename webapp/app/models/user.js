@@ -6,5 +6,8 @@ const userModel = new Schema({
     name : { type: String  },
     fname : { type: String  },
     islogin :{type :Boolean },
+    numberOfBooks : {type: Number, default : 0},
+    numberOfBorrowBooks : {type: Number, default : 0},
+    
 })
 module.exports = mongoose.model('User', userModel)
