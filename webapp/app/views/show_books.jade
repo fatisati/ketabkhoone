@@ -26,6 +26,23 @@ html(dir='rtl', lang='fa')
       .col-lg-12
         .row
             +show_books(books)
+      h1.my-4 نتایج جست و جو بر حسب محبوبیت :
+      // <div class="row">
+      .col-lg-12
+        .row
+            +show_books(book_score)
+      h1.my-4 نتایج جست و جو بر حسب انتشارات :
+      // <div class="row">
+      .col-lg-12
+        .row
+            +show_books(book_isbn)
+      h1.my-4 نتایج جست و جو بر حسب تعداد دفعات قرض گرفته شدن :
+      // <div class="row">
+      .col-lg-12
+        .row
+            +show_books(book_borrowNum)
+
+
         // /.row
         // /.col-lg-9
         // </div>

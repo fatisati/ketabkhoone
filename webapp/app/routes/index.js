@@ -1,7 +1,7 @@
 var express = require('express');
 const book = require("../models/book.js");
 const user = require("../models/user.js");
-const authorModel = require("../models/author.js");
+const author = require("../models/author.js");
 var router = express.Router();
 var fs = require('fs');
 
@@ -13,10 +13,10 @@ router.get('/', function (req, res, next) {
     console.log("Cookies index  ", req.cookies.islogin);
     if(req.cookies.islogin === 'true'){
         // console.log("go home");
-        console.log("cookie index2 "+req.cookies.islogin);
+        // console.log("cookie index2 "+req.cookies.islogin);
         res.redirect('/home');
     }else{
-        console.log("okkkk logout");
+        // console.log("okkkk logout");
         res.render('index');  
     }
     // res.render('index', { fail: false });
@@ -71,7 +71,7 @@ router.get('/home', function (req, res) {
     // }else{
     //     res.render('login');  
     // }
-    console.log("cookie home"+req.cookies.islogin)
+    console.log("cookie home "+req.cookies.islogin)
     if(req.cookies.islogin==='true'){
         // console.log("go home");
         console.log("cookie yessss");
@@ -188,18 +188,19 @@ router.post('/searchbook', function (req, res) {
         .populate('author')
         .exec((err, b1) => {
             var count1 = b1.length
+            // ----------------------------------
             author.find({ 'name': { "$regex": bn, $options: 'i' } }, (err, b2) => {
                 if (err) {
-                    console.log(err)
+                    console.log(err);
                 } else {
                     // res.render("searchbyname");
                     var count2 = b2.length
                     for (i = 0; i < count2; i++) {
                         b1[count1 + i] = b2[i];
-                        //console.log(" 2 author is " + b2[i]);
                     }
                 }
             })
+            // ----------------------------------
             if (err) {
                 console.log(err)
             } else {   
@@ -210,14 +211,10 @@ router.post('/searchbook', function (req, res) {
                 var count = b1.length
                 for (i = 0; i < count; i++) {
                     book_score[i] = b1[i];
-                    // console.log("author is " +  b[i]);
-                    // console.log("author is " +  book_score[i]);
                 }
                 //BASED ON ISBN OF BOOK
                  book_isbn = [];
                  b1.sort(  (a,b) => {
-                     // a = a.toLowerCase();
-                     // b = b.toLowerCase();
                      if (a.isbn < b.isbn) return 1;
                      if (a.isbn > b.isbn) return -1;
                      return 0;
@@ -228,8 +225,6 @@ router.post('/searchbook', function (req, res) {
                  //BASED ON borrowNum OF BOOK
                  book_borrowNum = [];
                  b1.sort(  (a,b) => {
-                     // a = a.toLowerCase();
-                     // b = b.toLowerCase();
                      if (aborrowNum < bborrowNum) return 1;
                      if (a.borrowNum > b.borrowNum) return -1;
                      return 0;
@@ -282,14 +277,10 @@ router.get('/allbooks', function (req, res) {
                 var count = b.length
                 for (i = 0; i < count; i++) {
                     book_score[i] = b[i];
-                    // console.log("author is " +  b[i]);
-                    // console.log("author is " +  book_score[i]);
                 }
                 //BASED ON ISBN OF BOOK
                 book_isbn = [];
                 b.sort(  (a,b) => {
-                    // a = a.toLowerCase();
-                    // b = b.toLowerCase();
                     if (a.isbn < b.isbn) return 1;
                     if (a.isbn > b.isbn) return -1;
                     return 0;
@@ -300,16 +291,14 @@ router.get('/allbooks', function (req, res) {
                 //BASED ON borrowNum OF BOOK
                 book_borrowNum = [];
                 b.sort(  (a,b) => {
-                    // a = a.toLowerCase();
-                    // b = b.toLowerCase();
-                    if (aborrowNum < bborrowNum) return 1;
+                    if (a.borrowNum < b.borrowNum) return 1;
                     if (a.borrowNum > b.borrowNum) return -1;
                     return 0;
                 });                
                 for (i = 0; i < count; i++) {
                     book_borrowNum[i] = b[i];
                 }
-                res.render('show_books', { books: b, login: false });
+                res.render('show_books', { books: b,book_score: book_score,book_isbn: book_isbn,book_borrowNum: book_borrowNum, login: false });
             }
         });
 });
