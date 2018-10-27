@@ -339,7 +339,7 @@ router.get('/test', function (req, res) {
             if (err) console.log(err);
             else {
                 console.log(b.author.name)
-                res.render('book_detail', { book: b })
+                res.render('borrow_book', { book: b })
             }
 
         })
