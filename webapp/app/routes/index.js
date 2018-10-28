@@ -290,7 +290,11 @@ router.get('/bookdetail/:id', function (req, res) {
 })
 
 router.get('/borrow', function (req, res) {
-    res.render('/borrow_book');
+    res.render('borrow_book');
+})
+
+router.get('/borrow_form', function (req, res) {
+    res.render('borrow_form', { title: 'Hello - Please Login To Your Account' });
 })
 
 router.get('/bookdetail', function(req, res){
@@ -315,7 +319,7 @@ router.get('/test', function (req, res) {
             if (err) console.log(err);
             else {
                 console.log(b.author.name)
-                res.render('book_detail', { book: b })
+                res.render('borrow_book', { book: b, users: [{name : 'fatemeh'}, {name: 'maryam'}] })
             }
 
         })
