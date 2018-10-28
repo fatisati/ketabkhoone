@@ -39,13 +39,33 @@ html(dir='rtl', lang='fa')
           h3.my-3 توضیحات
           p= book.summary
           
-          a.my-btn(href='/borrow') درخواست قرض
+         
         //-   h3.my-3 Project Details
         //-   ul
         //-     li Lorem Ipsum
         //-     li Dolor Sit Amet
         //-     li Consectetur
         //-     li Adipiscing Elit
+      br
+      br
+      .row
+        .col-4
+          #list-tab.list-group(role='tablist')
+            a#list-home-list.list-group-item.list-group-item-action.active(data-toggle='list', href='#list-home', role='tab', aria-controls='home') قرض دهندگان
+            each user in users  
+              a#list-profile-list.list-group-item.list-group-item-action(data-toggle='list', href= user.name, role='tab', aria-controls='profile')= user.name
+        .col-8
+          #nav-tabContent.tab-content
+            #list-home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='list-home-list') می توانید اطلاعات مربوط به هر کدام از قرض دهنده هار ار مشاهده کنید و درخواست قرض خود را برای فرد مورد نظر بفرستید.
+            each user in users
+              #{user.name}.tab-pane.fade.show.fade(role='tabpanel', aria-labelledby='list-home-list')= user.name
+
+            //- #list-profile.tab-pane.fade(role='tabpanel', aria-labelledby='list-profile-list') test2
+            //- #list-messages.tab-pane.fade(role='tabpanel', aria-labelledby='list-messages-list') ...
+            //- #list-settings.tab-pane.fade(role='tabpanel', aria-labelledby='list-settings-list') ...
+          
+          
+          a.my-btn(href='/borrow') درخواست قرض
       // /.row
       // Related Projects Row
    

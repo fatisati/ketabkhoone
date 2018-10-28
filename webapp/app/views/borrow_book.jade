@@ -15,7 +15,14 @@ html(dir='rtl', lang='fa')
     link(href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic', rel='stylesheet', type='text/css')
     // Custom styles for this template
     link(href='css/book_detail.css', rel='stylesheet')
-    link(rel="stylesheet", href="css/custom.css")
+    link(rel="stylesheet", href='css/custom.css')
+
+    //- link(href="{{ asset('css/book_detail.css') }}", rel='stylesheet')
+    //- link(rel="stylesheet", href="{{ asset('css/custom.css') }}")
+
+    //- base(href='http://localhost/fg/public/css/book_detail.css')
+    //- base(href='http://localhost/fg/public/css/custom.css')
+
   body
     // Navigation
     +nav([{name:'نمایش همه کتاب ها', href:'/allbooks'},{name: 'اضافه کردن کتاب', href: '/registerbook'}, {name:'صفحه من', href: '/profile'}, {name:'خروج', href:''}])
@@ -29,21 +36,36 @@ html(dir='rtl', lang='fa')
         .col-md-6
           img.img-fluid(src='/book/'+book._id+'/image', alt='')
         .col-md-6
-        
-          h3.my-3 قرض دهندگان کتاب
-          .col-md-2
+          h3.my-3 توضیحات
+          p= book.summary
+          
+         
+        //-   h3.my-3 Project Details
+        //-   ul
+        //-     li Lorem Ipsum
+        //-     li Dolor Sit Amet
+        //-     li Consectetur
+        //-     li Adipiscing Elit
+      br
+      br
+      .row
+        .col-4
+          #list-tab.list-group(role='tablist')
+            a#list-home-list.list-group-item.list-group-item-action.active(data-toggle='list', href='#list-home', role='tab', aria-controls='home') قرض دهندگان
+            each user in users  
+              a#list-profile-list.list-group-item.list-group-item-action(data-toggle='list', href= user.name, role='tab', aria-controls='profile')= user.name
+        .col-8
+          #nav-tabContent.tab-content
+            #list-home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='list-home-list') می توانید اطلاعات مربوط به هر کدام از قرض دهنده هار ار مشاهده کنید و درخواست قرض خود را برای فرد مورد نظر بفرستید.
+            each user in users
+              #{user.name}.tab-pane.fade.show.fade(role='tabpanel', aria-labelledby='list-home-list')= user.name
 
-            
+            //- #list-profile.tab-pane.fade(role='tabpanel', aria-labelledby='list-profile-list') test2
+            //- #list-messages.tab-pane.fade(role='tabpanel', aria-labelledby='list-messages-list') ...
+            //- #list-settings.tab-pane.fade(role='tabpanel', aria-labelledby='list-settings-list') ...
           
-      
-              .row
-          .col-md-6
-            #list-tab.list-group(role='tablist')
-              a#list-home-list.list-group-item.list-group-item-action.active(data-toggle='list', href='#list-home', role='tab', aria-controls='home') Home
-              a#list-profile-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-profile', role='tab', aria-controls='profile') Profile
-              a#list-messages-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-messages', role='tab', aria-controls='messages') Messages
-              a#list-settings-list.list-group-item.list-group-item-action(data-toggle='list', href='#list-settings', role='tab', aria-controls='settings') Settings
           
+          a.my-btn(href='/borrow_form') درخواست قرض
       // /.row
       // Related Projects Row
    
