@@ -304,6 +304,8 @@ router.get('/allbooks', function (req, res) {
                     book_borrowNum[i] = b[i];
                 }
                 res.render('show_books', { books: b,book_score: book_score,book_isbn: book_isbn,book_borrowNum: book_borrowNum, login: false });
+                // res.render('show_books', { books: b, login: false });
+                
             }
         });
 });
