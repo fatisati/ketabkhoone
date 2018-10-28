@@ -39,16 +39,16 @@ html(lang='fa', dir='rtl')
           form.login100-form.validate-form.flex-sb.flex-w(id='form-login', method='post', action='/addbook', enctype="multipart/form-data")
             span.login100-form-title.p-b-51 ثبت کتاب
             .wrap-input100.validate-input.m-b-16
-              input.input100(type='text', name='name', placeholder='نام کتاب')
+              input.input100(type='text', name='bookname', placeholder='نام کتاب')
               span.focus-input100
             .wrap-input100.validate-input.m-b-16
               input.input100(type='text', name='author', placeholder='نام نویسنده')
               span.focus-input100
             .wrap-input100.validate-input.m-b-16
-              input.input100(type='text', name='publisher', placeholder='نام ناشر')
+              input.input100(type='text', name='publication', placeholder='انتشارات')
               span.focus-input100
             .wrap-input100.validate-input.m-b-16
-              input.input100(type='text', name='year', placeholder='سال انتشار')
+              input.input100(type='text', name='yearOfPublish', placeholder='سال انتشار')
               span.focus-input100
             .wrap-input100.validate-input.m-b-16
               input.input100(type='text', name='genre', placeholder='موضوع')
@@ -69,6 +69,22 @@ html(lang='fa', dir='rtl')
             .wrap-input100.validate-input.m-b-16
               
               textarea.input101(type='text', name='info') 
+              span.focus-input100
+            br
+            br
+
+            label(for='more info') نظر شما در مورد این کتاب
+            .wrap-input100.validate-input.m-b-16
+              
+              textarea.input101(type='text', name='owner_comment') 
+              span.focus-input100
+            br
+            br
+
+            label(for='more info') قسمت هایی زیبا از کتاب
+            .wrap-input100.validate-input.m-b-16
+              
+              textarea.input101(type='text', name='beautiful_part') 
               span.focus-input100
 
             

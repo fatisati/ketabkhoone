@@ -1,5 +1,6 @@
 var express = require('express');
 const book = require("../models/book.js");
+const bookInstance = require("../models/book_instance.js");
 const user = require("../models/user.js");
 const author = require("../models/author.js");
 var router = express.Router();
@@ -8,31 +9,17 @@ var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    // session = COOKIE['islogin'];    
-    // res.cookie(islogin , false, {expire : new Date() + 9999});
-    console.log("Cookies index  ", req.cookies.islogin);
+    // console.log("Cookies index  ", req.cookies.islogin);
     if(req.cookies.islogin === 'true'){
-        // console.log("go home");
-        // console.log("cookie index2 "+req.cookies.islogin);
         res.redirect('/home');
     }else{
-        // console.log("okkkk logout");
         res.render('index');  
     }
-    // res.render('index', { fail: false });
 });
 
 router.get('/logout', function (req, res) {
-
-    // req.session.destroy(function(err){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-    //         res.redirect('/');
-    //     }
-    // });
     res.cookie('islogin' , false);
-    console.log("Cookies logout ", req.cookies.islogin);
+    // console.log("Cookies logout ", req.cookies.islogin);
     res.redirect('/');
 
 });
@@ -64,17 +51,8 @@ router.get('/login', function (req, res) {
 
 router.get('/home', function (req, res) {
     // check if the user's credentials are saved in a cookie //
-    // if(req.session.user != undefined){
-    //     // console.log("go home");
-    //     // console.log(req.session.user)
-    //     res.render('home');
-    // }else{
-    //     res.render('login');  
-    // }
-    console.log("cookie home "+req.cookies.islogin)
+    // console.log("cookie home "+req.cookies.islogin)
     if(req.cookies.islogin==='true'){
-        // console.log("go home");
-        console.log("cookie yessss");
         res.render('home');
     }else{
         res.render('login');  
@@ -115,15 +93,13 @@ router.post('/auth', function (req, res) {
                 req.session.islogin = req.body.islogin;
                 req.session.user = u;
                 res.cookie('islogin' , true, {expire : new Date() + 9999});
-                console.log("cookie auth "+req.cookies.islogin);
+                // console.log("cookie auth "+req.cookies.islogin);
                 res.redirect('/home') ;
                 }else{
                 res.render("login", { fail: true })
             }
-            // u.pass == req.body.pass ? res.redirect('/home') : res.render("login", { fail: true });
         } else {
             res.render("login", { fail: true });
-            //res.status(400).send(e);    
         }
     })
 
@@ -134,17 +110,17 @@ router.post('/auth', function (req, res) {
 
 router.post('/addbook', function (req, res) {
     console.log('we are in add book.');
-    var bookName = req.body.name;
+    var bookname = req.body.bookname;
     var author = req.body.author;
-    // var publisher = req.body.publisher;
-    // var year = req.body.year;
+    var publication = req.body.publication;
+    var yearOfPublish = req.body.yearOfPublish;
     var genre = req.body.genre;
-    // var numPage = req.body.numPage;
+    var numPages = req.body.numPages;
     var info = req.body.info;
     var image_path = req.files[0].path;
-    // sess = req.session;
-    // console.log(req.files)
-    let b = new book({ bookname: bookName, genre: genre, summary: info, user : req.session.user });
+    var owner_comment = req.body.owner_comment;
+    var beautiful_part = req.body.beautiful_part;
+    let b = new book({ bookname: bookname, genre: genre, summary: info, user : req.session.user });
     try {
         var image = fs.readFileSync(image_path);
         console.log('fs read the image');
