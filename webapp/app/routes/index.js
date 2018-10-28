@@ -111,7 +111,7 @@ router.post('/auth', function (req, res) {
 router.post('/addbook', function (req, res) {
     console.log('we are in add book.');
     var bookname = req.body.bookname;
-    var author = req.body.author;
+    var authorname = req.body.author;
     var publication = req.body.publication;
     var yearOfPublish = req.body.yearOfPublish;
     var genre = req.body.genre;
@@ -120,31 +120,58 @@ router.post('/addbook', function (req, res) {
     var image_path = req.files[0].path;
     var owner_comment = req.body.owner_comment;
     var beautiful_part = req.body.beautiful_part;
-    let b = new book({ bookname: bookname, genre: genre, summary: info, user : req.session.user });
     try {
         var image = fs.readFileSync(image_path);
         console.log('fs read the image');
-
     }
     catch (e) {
         console.log(e);
     }
-    b.img.data = image;
-    b.img.contentType = req.files[0].mimetype;
-    authorModel.findOne({ name: author }, function (err, doc) {
+    var aobject ;
+    author.findOne({name : authorname}, function (err, doc) {
         if (doc) {
-            b.author = doc;
-            console.log('author ' + author + ' found in db.');
+            aobject = doc;
+            console.log('author ' + authorname + ' found in db.');
         }
         else {
-            let a = new authorModel({ name: author });
+            let a = new author({ name: authorname });
             a.save();
-            console.log('author ' + author + ' saved in db.');
-            b.author = a;
-
+            console.log('author ' + authorname + ' saved in db.');
+            aobject = a;
         }
-        console.log('i an saving book with author: ' + b.author.name);
-        b.save(function (err) {
+        // console.log('i an saving book with author: ' + b.author.name);
+    });
+
+    //book model
+    var b = new book({  bookname: bookname, 
+                author :aobject,
+                genre: genre,
+                summary:info, 
+                comment:owner_comment});
+    user.findOne({ 'bookname': { "$regex": bookname, $options: 'i' }  }, (err, u) => {        
+        if (u) {
+            //this book is not new so do nothing 
+            b = u;          
+        } else {
+            //add this book to book model
+            b.save();
+        }
+    })
+    //book instance
+    let bI = new bookInstance({  book: b, 
+                        author :aobject,
+                        summary:info, 
+                        beautiful_part:beautiful_part,
+                        publication :publication, 
+                        status :'Available',                        
+                        owner_comment:owner_comment,
+                        yearOfPublish: yearOfPublish,
+                        numPages:numPages, 
+                        });  
+    bI.img.data = image;
+    bI.img.contentType = req.files[0].mimetype;
+
+    bI.save(function (err) {
             if (err) {
                 res.send(err);
             }
@@ -153,13 +180,15 @@ router.post('/addbook', function (req, res) {
             }
 
         });
-    });
+    
+
+    
 });
 
 router.post('/searchbook', function (req, res) {
 
     bn = req.body.name;
-    console.log(bn)
+    console.log("SEARCH"+bn)
     book.find({ $or: [{ 'bookname': { "$regex": bn, $options: 'i' } }] })
         .populate('author')
         .exec((err, b1) => {
