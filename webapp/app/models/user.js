@@ -5,11 +5,7 @@ const userModel = new Schema({
     pass : { type: String  },
     name : { type: String  },
     fname : { type: String  },
-    islogin :{type :Boolean },
     books :[{ type : Schema.ObjectId, ref: 'BookInstance' }]
-    // numberOfBooks : {type: Number, default : 0},
-    // numberOfBorrowBooks : {type: Number, default : 0},
-    
 })
 
 module.exports = mongoose.model('User', userModel)
