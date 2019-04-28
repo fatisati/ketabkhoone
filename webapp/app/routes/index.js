@@ -7,40 +7,37 @@ var router = express.Router();
 var fs = require('fs');
 
 
+// Require our controllers.
+var book_controller = require('../controllers/bookController');
+// var author_controller = require('../controllers/authorController');
+// var genre_controller = require('../controllers/genreController');
+// var book_instance_controller = require('../controllers/bookinstanceController');
+var user_controller = require('../controllers/userController');
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     // console.log("Cookies index  ", req.cookies.islogin);
-    if(req.cookies.islogin === 'true'){
+    if (req.cookies.islogin === 'true') {
         res.redirect('/home');
-    }else{
-        res.render('index');  
+    } else {
+        res.render('index');
     }
 });
 
-router.get('/logout', function (req, res) {
-    res.cookie('islogin' , false);
-    // console.log("Cookies logout ", req.cookies.islogin);
-    res.redirect('/');
-
+router.get('/home', function (req, res) {
+    // check if the user's credentials are saved in a cookie //
+    // console.log("cookie home "+req.cookies.islogin)
+    if (req.cookies.islogin === 'true') {
+        res.render('home');
+    } else {
+        res.render('login');
+    }
 });
 
-router.get('/registerbook', function (req, res) {
-    res.render('register_book');
-
-});
-
-/* GET Hello World page. */
-router.get('/helloworld', function (req, res) {
-    res.render('helloworld', { title: 'Hello, World!' });
-});
-
-/* GET Userlist page. */
-router.get('/userlist', function (req, res) {
-    user.find({}, {}, function (e, docs) {
-        res.render('userlist', {
-            "userlist": docs
-        });
-    });
+router.get('/signup', function (req, res) {
+    // check if the user's credentials are saved in a cookie //
+    res.render('signup', { title: 'Hello - Please Login To Your Account' });
 });
 
 // main login page //
@@ -49,266 +46,35 @@ router.get('/login', function (req, res) {
     res.render('login', { title: 'Hello - Please Login To Your Account' });
 });
 
-router.get('/home', function (req, res) {
-    // check if the user's credentials are saved in a cookie //
-    // console.log("cookie home "+req.cookies.islogin)
-    if(req.cookies.islogin==='true'){
-        res.render('home');
-    }else{
-        res.render('login');  
-    }
-});
-
-
-router.get('/signup', function (req, res) {
-    // check if the user's credentials are saved in a cookie //
-    res.render('signup', { title: 'Hello - Please Login To Your Account' });
-});
-
-router.post('/adduser', function (req, res) {
-
-    let u = new user({ username: req.body.email, name: req.body.name, fname: req.body.fname, pass: req.body.pass, 'islogine': true })
-    u.save(function (err, todos) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            console.log("user registered");
-            // And forward to success page
-            res.redirect('/home');
-            // res.render('home');
-        }
-    });
-});
-
-router.post('/auth', function (req, res) {
-    user.findOne({ 'username': req.body.email }, (err, u) => {
-        
-        if (u) {
-            if(u.pass == req.body.pass){
-                req.session.email = req.body.email;
-                req.session.name = req.body.name;
-                req.session.fname = req.body.fname;
-                req.session.islogin = req.body.islogin;
-                req.session.user = u;
-                res.cookie('islogin' , true, {expire : new Date() + 9999});
-                // console.log("cookie auth "+req.cookies.islogin);
-                res.redirect('/home') ;
-                }else{
-                res.render("login", { fail: true })
-            }
-        } else {
-            res.render("login", { fail: true });
-        }
-    })
+router.get('/logout', function (req, res) {
+    res.cookie('islogin', false);
+    // console.log("Cookies logout ", req.cookies.islogin);
+    res.redirect('/');
 
 });
 
-
-
-
-router.post('/addbook', function (req, res) {
-    console.log('we are in add book.');
-    var bookname = req.body.bookname;
-    var authorname = req.body.author;
-    var publication = req.body.publication;
-    var yearOfPublish = req.body.yearOfPublish;
-    var genre = req.body.genre;
-    var numPages = req.body.numPages;
-    var info = req.body.info;
-    var image_path = req.files[0].path;
-    var owner_comment = req.body.owner_comment;
-    var beautiful_part = req.body.beautiful_part;
-    try {
-        var image = fs.readFileSync(image_path);
-        console.log('fs read the image');
-    }
-    catch (e) {
-        console.log(e);
-    }
-    var aobject ;
-    author.findOne({name : authorname}, function (err, doc) {
-        if (doc) {
-            aobject = doc;
-            console.log('author ' + authorname + ' found in db.');
-        }
-        else {
-            let a = new author({ name: authorname });
-            a.save();
-            console.log('author ' + authorname + ' saved in db.');
-            aobject = a;
-        }
-        // console.log('i an saving book with author: ' + b.author.name);
-    });
-
-    //book model
-    var b = new book({  bookname: bookname, 
-                author :aobject,
-                genre: genre,
-                summary:info, 
-                comment:owner_comment});
-    user.findOne({ 'bookname': { "$regex": bookname, $options: 'i' }  }, (err, u) => {        
-        if (u) {
-            //this book is not new so do nothing 
-            b = u;          
-        } else {
-            //add this book to book model
-            b.save();
-        }
-    })
-    //book instance
-    let bI = new bookInstance({  book: b, 
-                        author :aobject,
-                        summary:info, 
-                        beautiful_part:beautiful_part,
-                        publication :publication, 
-                        status :'Available',                        
-                        owner_comment:owner_comment,
-                        yearOfPublish: yearOfPublish,
-                        numPages:numPages, 
-                        });  
-    bI.img.data = image;
-    bI.img.contentType = req.files[0].mimetype;
-
-    bI.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.redirect('/home');
-            }
-
-        });
-    
-
-    
+router.get('/registerbook', function (req, res) {
+    res.render('register_book');
 });
 
-router.post('/searchbook', function (req, res) {
+/* GET Userlist page. */
+router.get('/userlist', user_controller.user_list);
 
-    bn = req.body.name;
-    console.log("SEARCH"+bn)
-    book.find({ $or: [{ 'bookname': { "$regex": bn, $options: 'i' } }] })
-        .populate('author')
-        .exec((err, b1) => {
-            var count1 = b1.length
-            // ----------------------------------
-            author.find({ 'name': { "$regex": bn, $options: 'i' } }, (err, b2) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    // res.render("searchbyname");
-                    var count2 = b2.length
-                    for (i = 0; i < count2; i++) {
-                        b1[count1 + i] = b2[i];
-                    }
-                }
-            })
-            // ----------------------------------
-            if (err) {
-                console.log(err)
-            } else {   
-                //for show
-                //BASED ON SCORE OF BOOK
-                book_score = [];
-                b1.sort(  (a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 :0)  );
-                var count = b1.length
-                for (i = 0; i < count; i++) {
-                    book_score[i] = b1[i];
-                }
-                //BASED ON ISBN OF BOOK
-                 book_isbn = [];
-                 b1.sort(  (a,b) => {
-                     if (a.isbn < b.isbn) return 1;
-                     if (a.isbn > b.isbn) return -1;
-                     return 0;
-                 });                
-                 for (i = 0; i < count; i++) {
-                     book_isbn[i] = b1[i];
-                 }
-                 //BASED ON borrowNum OF BOOK
-                 book_borrowNum = [];
-                 b1.sort(  (a,b) => {
-                     if (aborrowNum < bborrowNum) return 1;
-                     if (a.borrowNum > b.borrowNum) return -1;
-                     return 0;
-                 });                
-                 for (i = 0; i < count; i++) {
-                     book_borrowNum[i] = b1[i];
-                 }             
-                res.render('show_books', { books: b1, login: false });
-            }
+router.post('/adduser', user_controller.add_user);
 
-            
-        });
+router.post('/auth', user_controller.authenticate);
 
-});
+router.post('/addbook', book_controller.add_book);
 
-router.get('/book/:id/image', function (req, res) {
-    // console.log('id is: ' + req.params.id);
-    book.findById(req.params.id, function (err, b) {
-        if (err) console.log(err);
-        else {
-            if (b.img) {
-                res.contentType(b.img.contentType);
-                res.send(b.img.data);
-            }
-            else {
-                // res.contentType('image/jpg');
-                res.send('no image');
-            }
-        }
+router.post('/searchbook', book_controller.search_book);
 
-    });
-});
+router.get('/book/:id/image', book_controller.book_image);
 
 router.get('/profile', function (req, res) {
-    // sess = req.session;
-    // console.log("proffffffffffffffffffffffffff  "+req.session.user.username);
-    res.render('profile',{user : req.session.user});
+    res.render('profile', { user: req.session.user });
 });
 
-router.get('/allbooks', function (req, res) {
-    book.find({ 'img': { $ne: null } })
-        .populate('author')
-        .exec((err, b) => {
-            if (err) {
-                console.log(err)
-            } else {
-                //BASED ON SCORE OF BOOK
-                book_score = [];
-                b.sort(  (a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 :0)  );
-                var count = b.length
-                for (i = 0; i < count; i++) {
-                    book_score[i] = b[i];
-                }
-                //BASED ON ISBN OF BOOK
-                book_isbn = [];
-                b.sort(  (a,b) => {
-                    if (a.isbn < b.isbn) return 1;
-                    if (a.isbn > b.isbn) return -1;
-                    return 0;
-                });                
-                for (i = 0; i < count; i++) {
-                    book_isbn[i] = b[i];
-                }
-                //BASED ON borrowNum OF BOOK
-                book_borrowNum = [];
-                b.sort(  (a,b) => {
-                    if (a.borrowNum < b.borrowNum) return 1;
-                    if (a.borrowNum > b.borrowNum) return -1;
-                    return 0;
-                });                
-                for (i = 0; i < count; i++) {
-                    book_borrowNum[i] = b[i];
-                }
-                res.render('show_books', { books: b,book_score: book_score,book_isbn: book_isbn,book_borrowNum: book_borrowNum, login: false });
-                // res.render('show_books', { books: b, login: false });
-                
-            }
-        });
-});
+router.get('/allbooks', book_controller.all_books);
 
 // router.get('/delete', function(req, res){
 //     book.find({}).remove().exec();
@@ -320,27 +86,12 @@ router.get('/bookdetail/:id', function (req, res) {
     res.redirect('/bookdetail')
 })
 
-// router.get('/borrow', function (req, res) {
-//     res.render('borrow_book');
-// })
+router.get('/bookdetail', book_controller.book_detail)
 
 router.get('/borrow_form', function (req, res) {
     res.render('borrow_form', { title: 'Hello - Please Login To Your Account' });
 })
 
-router.get('/bookdetail', function(req, res){
-    // res.send(req.session.id)
-    book.findById(req.session.id)
-        .populate('author')
-        .exec(function (err, b) {
-            if (err) console.log(err);
-            else {
-                console.log(b.author.name)
-                res.render('book_detail', { book: b , users: [{name : 'fatemeh'}, {name: 'maryam'}]})
-            }
-
-    })
-})
 router.get('/test', function (req, res) {
 
     // console.log("hello");
@@ -350,7 +101,7 @@ router.get('/test', function (req, res) {
             if (err) console.log(err);
             else {
                 console.log(b.author.name)
-                res.render('book_detail', { book: b, users: [{name : 'fatemeh'}, {name: 'maryam'}] })
+                res.render('book_detail', { book: b, users: [{ name: 'fatemeh' }, { name: 'maryam' }] })
             }
 
         })
